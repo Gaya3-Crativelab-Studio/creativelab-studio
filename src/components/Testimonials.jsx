@@ -1,0 +1,69 @@
+import { FaUserCircle } from "react-icons/fa";
+import { RiDoubleQuotesL } from "react-icons/ri";
+import testimonialsData from "../data/testimonialsData";
+
+const Testimonials = () => {
+  return (
+    <section id="testimonials" className="bg-white py-32 overflow-hidden">
+      <div className="max-w-350 mx-auto px-6 sm:px-8 lg:px-12">
+        {/* Heading */}
+
+        <div className="text-center mb-24">
+          <p className="font-[Nexa] uppercase tracking-[5px] text-[#6F00FF] text-xl text-bold mb-5">
+            TESTIMONIALS
+          </p>
+
+          <h2 className="font-[Founders] text-[#111111] text-4xl sm:text-5xl lg:text-6xl leading-none">
+            Words from our clients
+            <span className="text-[#6F00FF]">.</span>
+          </h2>
+        </div>
+
+        {/* Cards */}
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {testimonialsData.map((item) => (
+            <div
+              key={item.id}
+              className="group relative bg-[#FBFAFF] border border-[#ECE2FF] rounded-2xl p-10 lg:p-12 overflow-hidden duration-500 hover:-translate-y-3 hover:shadow-[0_35px_80px_rgba(111,0,255,0.12)]"
+            >
+              {/* Glow */}
+
+              <div className="absolute -top-20 -right-20 w-55 h-55 bg-[#6F00FF]/5 rounded-full blur-[80px]" />
+
+              {/* Quote */}
+
+              <RiDoubleQuotesL className="absolute top-8 right-8 text-[70px] text-[#6F00FF]/10 duration-500 group-hover:scale-110" />
+
+              {/* Profile */}
+
+              <div className="flex items-center gap-4 mb-10">
+                <div className="w-16 h-16 rounded-full bg-[#6F00FF]/10 flex items-center justify-center border border-[#E4D8FF]">
+                  <FaUserCircle className="text-[#6F00FF] text-[38px]" />
+                </div>
+
+                <div>
+                  <h4 className="font-[Founders] text-[#111111] text-xl">
+                    {item.name}
+                  </h4>
+
+                  <p className="font-[Nexa] text-[#777777] text-sm">
+                    {item.role}
+                  </p>
+                </div>
+              </div>
+
+              {/* Testimonial */}
+
+              <p className="font-[Nexa] text-[#444444] text-lg leading-loose relative z-10">
+                "{item.text}"
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;

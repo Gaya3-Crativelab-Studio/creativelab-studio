@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #6f00ff;
+  --primary-light: #7b68ee;
+
+  --accent: #c0ff00;
+  --accent-gold: #ffd700;
+
+  --soft-pink: #f4c2c2;
+  --soft-lavender: #ccccff;
+  --soft-green: #e9ffd8;
+
+  --bg: #050505;
+  --surface: #101010;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+
+  --border: #242424;
+
+  --gradient-primary: linear-gradient(135deg,#6f00ff 0%,#7b68ee 100%);
+  --gradient-soft: linear-gradient(135deg,#ccccff 0%,#f4c2c2 100%);
+
+  --shadow-purple: 0 0 80px rgba(111,0,255,.35);
+}
+
+/* Founders */
+
+@font-face {
+  font-family: "Founders";
+  src: url("/src/assets/fonts/FoundersGrotesk-Regular.otf")
+    format("opentype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Founders";
+  src: url("/src/assets/fonts/FoundersGrotesk-Medium.otf")
+    format("opentype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Founders";
+  src: url("/src/assets/fonts/FoundersGrotesk-Bold.otf")
+    format("opentype");
+  font-weight: 700;
+}
+
+/* Adobe Nexa */
+
+.font-nexa {
+  font-family: "nexa", sans-serif;
+}
+
+.font-founders {
+  font-family: "Founders", sans-serif;
+}
+
+/* Base */
+
+body {
+  font-family: "nexa", sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Founders", sans-serif;
+}
+
+/* Hide Scrollbar */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hero Marquee */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+
+/* Client Marquee */
+
+@keyframes marqueeMove {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marqueeMove 22s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
