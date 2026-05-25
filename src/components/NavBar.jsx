@@ -149,7 +149,7 @@ const NavBar = () => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `font-[Founders]
-                text-[34px]
+                text-2xl
                 py-3
                 duration-300
                 ${isActive ? "text-[#6F00FF]" : "text-[#111111]"}`
