@@ -20,7 +20,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-[#ECE7FF] flex items-center"
+      className="relative min-h-screen overflow-hidden bg-[#ECE7FF] p-1 flex items-center"
     >
       {/* Background Image */}
 
@@ -37,7 +37,7 @@ const Hero = () => {
       <img
         src={rocket}
         alt="Creative Decoration"
-        className="absolute top-[30%] right-[-2%] sm:top-[32%] sm:right-0 md:top-[34%] md:right-[2%] lg:top-1/2 lg:right-[3%] xl:right-[5%] 2xl:right-[5%] lg:-translate-y-1/2 w-18 sm:w-24 md:w-32 lg:w-[380px] xl:w-180 2xl:w-200 opacity-95 pointer-events-none select-none z-[2] animate-float" />
+        className="absolute top-[30%] right-[-2%] sm:top-[32%] sm:right-0 md:top-[34%] md:right-[2%] lg:top-1/2 lg:right-[3%] xl:right-[5%] 2xl:right-[5%] lg:-translate-y-1/2 w-18 sm:w-24 md:w-32 lg:w-[380px] xl:w-170 2xl:w-200 opacity-95 pointer-events-none select-none z-[2] animate-float" />
 
       {/* Glow Effects */}
 
