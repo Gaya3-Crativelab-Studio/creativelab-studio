@@ -195,7 +195,7 @@ const StandOut = () => {
           >
             {/* Label */}
             <motion.p
-              className="font-[Nexa] text-[#6F00FF] text-xs tracking-[4px] uppercase mb-5 flex items-center gap-3"
+              className="font-[Nexa] text-[#6F00FF] text-sm tracking-[4px] uppercase mb-5 flex items-center gap-3"
               variants={fadeUp}
             >
               <span className="w-6 h-px bg-[#6F00FF] inline-block" />

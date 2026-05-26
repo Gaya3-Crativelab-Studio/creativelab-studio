@@ -14,9 +14,7 @@ const Story = () => {
           className="max-w-262.5 mx-auto text-center"
         >
           <h2 className="font-[Founders] text-[#111111] text-xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.04em]">
-            We believe creativity
-            <br />
-            is more than design —
+            We believe creativity is more than design
             <br />
             <span className="text-[#6F00FF]"> it’s an experience </span>
             worth feeling.

@@ -19,32 +19,29 @@
 
   --border: #242424;
 
-  --gradient-primary: linear-gradient(135deg,#6f00ff 0%,#7b68ee 100%);
-  --gradient-soft: linear-gradient(135deg,#ccccff 0%,#f4c2c2 100%);
+  --gradient-primary: linear-gradient(135deg, #6f00ff 0%, #7b68ee 100%);
+  --gradient-soft: linear-gradient(135deg, #ccccff 0%, #f4c2c2 100%);
 
-  --shadow-purple: 0 0 80px rgba(111,0,255,.35);
+  --shadow-purple: 0 0 80px rgba(111, 0, 255, 0.35);
 }
 
 /* Founders */
 
 @font-face {
   font-family: "Founders";
-  src: url("/src/assets/fonts/FoundersGrotesk-Regular.otf")
-    format("opentype");
+  src: url("/src/assets/fonts/FoundersGrotesk-Regular.otf") format("opentype");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Founders";
-  src: url("/src/assets/fonts/FoundersGrotesk-Medium.otf")
-    format("opentype");
+  src: url("/src/assets/fonts/FoundersGrotesk-Medium.otf") format("opentype");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Founders";
-  src: url("/src/assets/fonts/FoundersGrotesk-Bold.otf")
-    format("opentype");
+  src: url("/src/assets/fonts/FoundersGrotesk-Bold.otf") format("opentype");
   font-weight: 700;
 }
 
@@ -116,9 +113,39 @@ h6 {
 
 .marquee-track {
   width: max-content;
+  padding-left: 40px;
   animation: marqueeMove 22s linear infinite;
+  will-change: transform;
 }
 
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+@keyframes marqueeMove {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
 }

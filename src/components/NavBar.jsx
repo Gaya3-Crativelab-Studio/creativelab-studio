@@ -9,14 +9,14 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Portfolio", path: "/portfolio" },
+    { name: "HOME", path: "/" },
+    { name: "ABOUT", path: "/about" },
+    { name: "SERVICES", path: "/services" },
+    { name: "PORTFOLIO", path: "/portfolio" },
   ];
 
   const logo =
-    "https://res.cloudinary.com/dxfs7qyzm/image/upload/v1779434574/Creative_Lab_sdbuvi.svg";
+    "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779779956/Creative_Lab_v0xrl3.svg";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,14 +43,14 @@ const NavBar = () => {
       >
         <div className="absolute inset-0 bg-linear-to-r from-[#6F00FF]/5 via-transparent to-[#C0FF00]/5 pointer-events-none" />
 
-        <nav className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between relative">
+        <nav className="max-w-350 mx-auto px-5 sm:px-8 lg:px-12 h-26 flex items-center justify-between relative">
           {/* Logo */}
 
           <NavLink to="/">
             <img
               src={logo}
               alt="CreativeLab Studio"
-              className="h-16 sm:h-18 object-contain"
+              className="h-18 sm:h-28 object-contain"
             />
           </NavLink>
 
@@ -62,7 +62,7 @@ const NavBar = () => {
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    `relative text-xl font-bold tracking-wide pb-2 transition-all duration-300 ${
+                    `relative text-sm tracking-wide pb-2 transition-all duration-300 ${
                       isActive
                         ? "text-[#6F00FF]"
                         : "text-[#111111] hover:text-[#6F00FF]"
@@ -74,7 +74,7 @@ const NavBar = () => {
                       {item.name}
 
                       <span
-                        className={`absolute left-0 bottom-0 h-[2px] rounded-full bg-[#6F00FF] transition-all duration-500 ${
+                        className={`absolute left-0 bottom-0 h-0.5 rounded-full bg-[#6F00FF] transition-all duration-500 ${
                           isActive ? "w-full" : "w-0"
                         }`}
                       />
@@ -129,7 +129,7 @@ const NavBar = () => {
         {/* Header */}
 
         <div className="flex justify-between items-center px-6 py-5 border-b border-[#ECECEC]">
-          <img src={logo} alt="CreativeLab" className="h-14 object-contain" />
+          <img src={logo} alt="CreativeLab" className="h-20 object-contain" />
 
           <button
             onClick={() => setIsOpen(false)}
@@ -149,7 +149,7 @@ const NavBar = () => {
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `font-[Founders]
-                text-2xl
+                text-xl
                 py-3
                 duration-300
                 ${isActive ? "text-[#6F00FF]" : "text-[#111111]"}`
@@ -169,8 +169,7 @@ const NavBar = () => {
             py-4
             rounded-full
             text-white
-            font-semibold
-            shadow-[0_15px_40px_rgba(111,0,255,0.25)]
+            shadow-[0_5px_30px_rgba(111,0,255,0.25)]
             duration-300
             cursor-pointer"
           >

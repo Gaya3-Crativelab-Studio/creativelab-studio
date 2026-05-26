@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   FaInstagram,
   FaLinkedinIn,
@@ -31,7 +32,9 @@ const Footer = () => {
             </h2>
 
             <p className="font-[Nexa] text-purple-100/80 leading-8 max-w-137.5 mb-10">
-             CreativeLab Studio is a boutique creative studio specializing in branding, digital experiences, visual storytelling, and modern design systems.
+              CreativeLab Studio is a boutique creative studio specializing in
+              branding, digital experiences, visual storytelling, and modern
+              design systems.
             </p>
 
             <div className="space-y-7">
@@ -61,14 +64,23 @@ const Footer = () => {
             </div>
 
             <div className="flex gap-4 mt-10">
-              {[<FaInstagram />, <FaLinkedinIn />].map((icon, index) => (
-                <button
-                  key={index}
-                  className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#6F00FF] duration-300 backdrop-blur-md cursor-pointer"
-                >
-                  {icon}
-                </button>
-              ))}
+              <a
+                href="https://www.instagram.com/creativelabstudio.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#6F00FF] duration-300 backdrop-blur-md cursor-pointer"
+              >
+                <FaInstagram />
+              </a>
+
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#6F00FF] duration-300 backdrop-blur-md cursor-pointer"
+              >
+                <FaLinkedinIn />
+              </a>
             </div>
           </div>
 
@@ -102,7 +114,7 @@ const Footer = () => {
                 className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-[28px] px-6 py-5 outline-none resize-none text-white placeholder:text-purple-100/70 focus:border-white duration-300"
               />
 
-              <button className="flex items-center gap-3 bg-white text-[#6F00FF] hover:bg-[#F5F0FF] px-8 py-4 rounded-full duration-300 hover:scale-105 font-semibold">
+              <button className="flex items-center gap-3 bg-white text-[#6F00FF] hover:bg-[#F5F0FF] px-8 py-4 rounded-full duration-300 hover:scale-105 font-semibold cursor-pointer">
                 <FaPaperPlane />
                 Send Message
               </button>
@@ -113,16 +125,36 @@ const Footer = () => {
         <div className="border-t border-white/20 mt-20 pt-8 flex flex-col md:flex-row justify-between gap-5 text-purple-100/70">
           <p>© 2026 CreativeLab Studio. Crafted with intention.</p>
 
-          <div><DevelopedByStaffArc/></div>
+          <div>
+            <DevelopedByStaffArc />
+          </div>
 
           <div className="flex gap-6">
-            <p className="hover:text-white duration-300 cursor-pointer">
+            <Link
+              to="/terms-and-conditions"
+              className="
+    hover:text-white
+    duration-300
+    cursor-pointer
+    hover:underline
+    underline-offset-4
+    "
+            >
               Terms & Conditions
-            </p>
+            </Link>
 
-            <p className="hover:text-white duration-300 cursor-pointer">
+            <Link
+              to="/privacy-policy"
+              className="
+    hover:text-white
+    duration-300
+    cursor-pointer
+    hover:underline
+    underline-offset-4
+    "
+            >
               Privacy Policy
-            </p>
+            </Link>
           </div>
         </div>
       </div>

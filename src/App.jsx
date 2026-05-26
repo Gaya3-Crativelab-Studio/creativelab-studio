@@ -9,6 +9,8 @@ import DiscoveryCall from "./pages/DiscoveryCall";
 import NavBar from "./components/NavBar";
 import ScrollToTop from "./components/ScrollToTop";
 import PageNotFound from "./components/PageNotFound";
+import TermsConditions from "./components/TermsConditions";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 function App() {
   return (
@@ -29,6 +31,10 @@ function App() {
         <Route path="/discovery-call" element={<DiscoveryCall />} />
 
         <Route path="*" element={<PageNotFound />} />
+
+        <Route path="/terms-and-conditions" element={<TermsConditions />} />
+
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </>
   );

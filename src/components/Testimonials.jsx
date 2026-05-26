@@ -29,11 +29,11 @@ const Testimonials = () => {
         {/* Heading */}
 
         <div className="text-center mb-24">
-          <p className="font-[Nexa] uppercase tracking-[5px] text-[#6F00FF] text-xl font-bold mb-5">
+          {/* <p className="font-[Nexa] uppercase tracking-[5px] text-[#6F00FF] text-xl font-bold mb-5">
             TESTIMONIALS
-          </p>
+          </p> */}
 
-          <h2 className="font-[Founders] text-[#111111] text-4xl sm:text-5xl lg:text-6xl leading-none">
+          <h2 className="font-[Founders] text-[#6F00FF] text-4xl sm:text-5xl lg:text-6xl leading-none">
             Words from our clients
             <span className="text-[#6F00FF]">.</span>
           </h2>

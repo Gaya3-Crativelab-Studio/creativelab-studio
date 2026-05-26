@@ -103,17 +103,19 @@ export default function FeatureProject() {
       }}
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-        <div className="px-6 lg:px-10 flex flex-col align-items mb-16">
-          <p className="font-[Nexa] text-center uppercase tracking-[5px] text-[#6F00FF] mb-4">
+        <div className="px-6 lg:px-10 flex flex-col align-items mb-16 mt-10">
+          {/* <p className="font-[Nexa] text-center uppercase tracking-[5px] text-[#6F00FF] mb-4">
             FEATURED PROJECTS
-          </p>
+          </p> */}
 
           <h2 className="font-[Founders] text-center text-[#6F00FF] text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
             Selected projects & visual stories
             <span className="text-[#6F00FF]">.</span>
           </h2>
-          <p className="font-[Nexa] text-xl text-[#111111] w-max mt-6">
-            A curated collection of branding, digital experiences, and visual systems designed for modern brands across fashion, beauty, lifestyle, hospitality, and emerging businesses.
+          <p className="font-[Nexa] text-sm sm:text-base lg:text-xl text-[#111111] max-w-[320px] sm:max-w-[650px] lg:max-w-[1100px] mx-auto mt-6 leading-7 sm:leading-8 text-center px-4">
+            A curated collection of branding, digital experiences, and visual
+            systems designed for modern brands across fashion, beauty,
+            lifestyle, hospitality, and emerging businesses.
           </p>
         </div>
 
