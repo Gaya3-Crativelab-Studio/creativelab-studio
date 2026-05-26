@@ -37,7 +37,7 @@ const Hero = () => {
       <img
         src={rocket}
         alt="Creative Decoration"
-        className="hidden lg:block absolute top-1/2 right-[-10%] -translate-y-1/2 w-[48vw] min-w-[1280px] max-w-[1400px] opacity-95 pointer-events-none select-none z-[2] animate-float"
+        className="hidden lg:block absolute top-1/2 right-[-10%] -translate-y-1/2 w-[48vw] min-w-[1100px] max-w-[1300px] opacity-95 pointer-events-none select-none z-[2] animate-float"
       />
 
       {/* Glow Effects */}
