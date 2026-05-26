@@ -53,7 +53,7 @@ const Hero = () => {
           {/* LEFT */}
 
           <div className="max-w-225">
-            <p className="text-[#6F00FF] uppercase tracking-[4px] font-bold text-xs sm:text-sm mb-7">
+            <p className="text-[#6F00FF] uppercase tracking-[4px] font-bold text-xs sm:text-sm mb-7 mt-5">
               CREATIVE STUDIO • BRAND STRATEGY • VISUAL EXPERIENCES
             </p>
 
