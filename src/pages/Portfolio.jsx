@@ -1,7 +1,6 @@
 import PageHero from "../components/shared/PageHero";
 import MarqueeStrip from "../components/about/MarqueeStrip";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import portfolioData from "../data/portfolioData";
 import { HiOutlineXMark } from "react-icons/hi2";
@@ -10,6 +9,19 @@ import Footer from "../components/Footer";
 const Portfolio = () => {
   const [active, setActive] = useState("All");
   const [selected, setSelected] = useState(null);
+
+  // Lock background scroll when modal opens
+  useEffect(() => {
+    if (selected) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selected]);
 
   const categories = [
     "All",
@@ -72,7 +84,7 @@ const Portfolio = () => {
                 className={`px-7 py-3 rounded-full font-[Nexa] border duration-300 cursor-pointer ${
                   active === item
                     ? "bg-[#6F00FF] text-white border-[#6F00FF]"
-                    : "bg-white text-black border-[#DDD6FE] hover:text-[#6F00FF] hover:bg-[#CCCCFF] hover:border-[#6F00FF] hover:shadow-[0_10px_35px_rgba(204,204,255,0.45),0_15px_45px_rgba(204,204,255,0.65)] duration-300"
+                    : "bg-white text-black border-[#DDD6FE] hover:text-[#6F00FF] hover:bg-[#CCCCFF] hover:border-[#6F00FF]"
                 }`}
               >
                 {item}
@@ -96,10 +108,8 @@ const Portfolio = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                   onClick={() => setSelected(item)}
-                  className="group relative overflow-hidden rounded-2xl cursor-pointer bg-[#F8F8F8] shadow-[0_12px_45px_rgba(0,0,0,0.08)] duration-500 hover:scale-[0.96]"
+                  className="group relative overflow-hidden rounded-2xl cursor-pointer bg-[#F8F8F8] shadow-[0_12px_45px_rgba(0,0,0,0.08)] duration-500 hover:scale-[0.97]"
                 >
-                  {/* Image */}
-
                   <img
                     src={item.image}
                     alt={item.title}
@@ -136,43 +146,34 @@ const Portfolio = () => {
         <AnimatePresence>
           {selected && (
             <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-              }}
-              className=" fixed inset-0 z-999 bg-black/90 flex items-center justify-center p-6 "
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelected(null)}
+              className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-md flex items-center justify-center p-6"
             >
               <button
                 onClick={() => setSelected(null)}
-                className=" absolute top-8 right-8 text-white cursor-pointer "
+                className="absolute top-8 right-8 text-white z-10 cursor-pointer"
               >
                 <HiOutlineXMark size={42} />
               </button>
 
               <motion.div
-                initial={{
-                  scale: 0.9,
-                }}
-                animate={{
-                  scale: 1,
-                }}
-                exit={{
-                  scale: 0.9,
-                }}
-                className="max-w-250 w-full"
+                initial={{ scale: 0.92 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.92 }}
+                transition={{ duration: 0.25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="max-w-[1100px] w-full"
               >
                 <img
                   src={selected.image}
                   alt={selected.title}
-                  className="rounded-[28px] w-full max-h-[85vh] object-cover "
+                  className="rounded-[28px] w-full max-h-[85vh] object-contain"
                 />
 
-                <h3 className="font-[Founders] text-white text-5xl mt-8 ">
+                <h3 className="font-[Founders] text-white text-4xl lg:text-5xl mt-6">
                   {selected.title}
                 </h3>
               </motion.div>
@@ -181,9 +182,7 @@ const Portfolio = () => {
         </AnimatePresence>
       </section>
 
-      {/* Marquee Strip */}
       <MarqueeStrip />
-      {/* Footer */}
       <Footer />
     </>
   );
