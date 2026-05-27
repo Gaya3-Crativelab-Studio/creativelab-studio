@@ -23,9 +23,9 @@ const Hero = () => {
     >
       {/* Glow Effects */}
 
-      <div className="absolute -top-32 -left-20 w-90 h-90 bg-[#6F00FF]/10 rounded-full blur-[120px]" />
+      <div className="absolute -top-32 -left-20 w-90 h-90 bg-[#6F00FF]/20 rounded-full blur-[120px]" />
 
-      <div className="absolute -bottom-25 right-0 w-90 h-90 bg-[#C0FF00]/10 rounded-full blur-[130px]" />
+      <div className="absolute -bottom-25 right-0 w-90 h-90 bg-[#6F00FF]/20 rounded-full blur-[130px]" />
 
       {/* Main Container */}
 
@@ -39,9 +39,11 @@ const Hero = () => {
             </p>
 
             <h1 className="font-founders font-bold text-black text-[clamp(2rem,3.5vw,3.2rem)] leading-tight tracking-[-0.03em] mb-6">
-              Premium branding, creative production, and web design for brands
-              that want to <span className="text-[#6F00FF]">stand out</span>,
-              connect, and convert.
+              We build
+              <span className="text-[#6F00FF]"> brands, </span>
+              visuals & digital experiences that
+              <span className="text-[#6F00FF]"> leave a lasting</span>{" "}
+              impression.
             </h1>
 
             <p className="font-[Nexa] text-[#555555] text-[15px] sm:text-base leading-7 mt-6 max-w-[540px]">
