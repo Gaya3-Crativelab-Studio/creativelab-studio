@@ -36,6 +36,7 @@ function DiscoveryForm({
   onSubmit,
   isSubmitting,
   fieldLabels,
+  submitError,
 }) {
   return (
     <motion.form
@@ -269,6 +270,9 @@ function DiscoveryForm({
           "Schedule Discovery Call"
         )}
       </button>
+      {submitError && (
+        <p className="mt-3 text-sm text-rose-600">{submitError}</p>
+      )}
     </motion.form>
   );
 }

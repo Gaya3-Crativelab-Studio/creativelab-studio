@@ -63,7 +63,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <button
                 onClick={() => navigate("/discovery-call")}
-                className="bg-[#6F00FF] hover:bg-[#7B68EE] text-white px-7 py-3 rounded-full flex items-center justify-center gap-3 duration-300 hover:scale-105 shadow-[0_5px_16px_rgba(111,0,255,0.14)] text-base font-semibold"
+                className="bg-[#6F00FF] hover:bg-[#7B68EE] text-white px-7 py-3 rounded-full flex items-center justify-center gap-3 duration-300 hover:scale-105 shadow-[0_5px_16px_rgba(111,0,255,0.14)] text-base font-semibold cursor-pointer"
               >
                 <FaPhoneAlt />
                 Book a Discovery Call
@@ -71,7 +71,7 @@ const Hero = () => {
 
               <button
                 onClick={() => navigate("/portfolio")}
-                className="bg-white text-black px-8 py-3 rounded-full hover:border-[#6F00FF] border duration-300 hover:scale-105 text-base font-semibold"
+                className="bg-white text-black px-8 py-3 rounded-full hover:border-[#6F00FF] border duration-300 hover:scale-105 text-base font-semibold cursor-pointer"
               >
                 View Our Work
               </button>

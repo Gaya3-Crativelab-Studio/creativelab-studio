@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import DiscoveryForm from "../components/DiscoveryForm";
 import BenefitsCard from "../components/BenefitsCard";
 import SuccessModal from "../components/SuccessModal";
+import { db } from "../lib/firebase";
 
 const initialForm = {
   fullName: "",
@@ -87,6 +89,7 @@ function DiscoveryCall() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const completion = useMemo(() => {
@@ -173,11 +176,30 @@ function DiscoveryCall() {
     }
 
     setIsSubmitting(true);
+    setSubmitError("");
 
-    await new Promise((resolve) => setTimeout(resolve, 1400));
+    try {
+      console.log("Submitting started");
 
-    setIsSubmitting(false);
-    setIsOpen(true);
+      const docRef = await addDoc(collection(db, "discovery_calls"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
+
+      console.log("Success:", docRef.id);
+
+      setFormData(initialForm);
+
+      setIsOpen(true);
+    } catch (error) {
+      console.error("Firebase Error:", error.code, error.message);
+
+      setSubmitError(error.message || "Something went wrong.");
+    } finally {
+      console.log("Loading stopped");
+
+      setIsSubmitting(false);
+    }
   };
 
   const closeModal = () => setIsOpen(false);
@@ -280,6 +302,7 @@ function DiscoveryCall() {
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
                 fieldLabels={fieldLabels}
+                submitError={submitError}
               />
             </motion.div>
 
