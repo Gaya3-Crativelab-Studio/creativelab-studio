@@ -118,6 +118,40 @@ const portfolioData = [
     image:
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/f_auto,q_auto,w_900/v1779850942/IMG_0192_ujkeym.jpg",
   },
+  {
+  id: 12,
+  title: "Luxury Skincare Visual",
+  category: "Product Photography",
+  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_1_oa7ikq.jpg",
+},
+
+{
+  id: 13,
+  title: "Dessert Brand Styling",
+  category: "Food Photography",
+  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976640/WhatsApp_Image_2026-05-28_at_09.48.58_2_hujpsp.jpg",
+},
+
+{
+  id: 14,
+  title: "Cupcake Campaign Visual",
+  category: "Creative Photography",
+  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_aom3qk.jpg",
+},
+
+{
+  id: 15,
+  title: "Jewellery Flatlay Showcase",
+  category: "Jewellery Branding",
+  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976642/WhatsApp_Image_2026-05-28_at_09.48.59_1_q5zfgd.jpg",
+},
+
+{
+  id: 16,
+  title: "Luxury Ring Product Shot",
+  category: "Product Styling",
+  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976641/WhatsApp_Image_2026-05-28_at_09.48.59_chadsw.jpg",
+},
 ];
 
 export default portfolioData;

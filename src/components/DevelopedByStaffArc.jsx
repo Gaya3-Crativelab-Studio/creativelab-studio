@@ -2,7 +2,7 @@ import { FiHeart } from "react-icons/fi";
 
 const DevelopedByStaffArc = () => {
   return (
-    <div className="flex items-center justify-center gap-2 text-sm md:text-base font-medium text-white/75">
+    <div className="flex items-center justify-center gap-2 text-sm md:text-base font-medium text-[#4D3B7A]">
       <span>Made with</span>
       <FiHeart className="text-red-600 text-lg" />
       <span>by</span>

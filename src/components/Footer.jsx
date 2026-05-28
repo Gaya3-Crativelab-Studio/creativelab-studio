@@ -13,56 +13,54 @@ const Footer = () => {
     "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779779956/Creative_Lab_v0xrl3.svg";
 
   return (
-    <footer className="relative overflow-hidden bg-[#CCCCFF] border-t border-[#B7B7F5]">
+    <footer className="relative overflow-hidden bg-[#ECE7FF] border-t border-[#B7B7F5]">
       {/* Glow Effects */}
 
       <div className="absolute top-[-120px] left-[-120px] w-[300px] h-[300px] bg-[#6F00FF]/20 blur-[120px] rounded-full" />
 
       <div className="absolute bottom-[-120px] right-[-120px] w-[320px] h-[320px] bg-[#C0FF00]/20 blur-[120px] rounded-full" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-18">
+      <div className="relative z-10 max-w-[1450px] mx-auto px-6 sm:px-8 lg:px-12 py-20">
         {/* Top */}
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-14">
+        <div className="grid lg:grid-cols-[1.2fr_1fr_1fr_1fr] md:grid-cols-2 gap-14">
           {/* Brand */}
 
-          <div>
+          <div className="flex flex-col items-start">
             <img
               src={logo}
               alt="CreativeLab Studio"
-              className="h-35 object-contain mb-6"
+              className="w-[460px] lg:w-[380px] object-contain mb-2 -ml-16 lg:-ml-20"
             />
 
-            <p className="font-[Nexa] text-[#4D3B7A] leading-8 text-[15px] max-w-xs">
-              CreativeLab Studio crafts luxury branding, cinematic visuals,
-              digital experiences, and modern design systems with emotion and
-              precision.
-            </p>
+            <h3 className="font-[Nexa] text-[20px] text-[#6F00FF] mb-5">
+              Follow us on social media
+            </h3>
 
-            <div className="flex gap-4 mt-8">
+            <div className="flex gap-4">
               <a
                 href="https://www.instagram.com/creativelabstudio.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-[#6F00FF] hover:bg-[#6F00FF] hover:text-white duration-300 cursor-pointer"
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-[#6F00FF] hover:bg-[#6F00FF] hover:text-white duration-300 shadow-[0_8px_25px_rgba(111,0,255,0.12)]"
               >
-                <FaInstagram size={25} />
+                <FaInstagram size={22} />
               </a>
 
               <a
                 href="https://www.linkedin.com/company/the-creative-labstudio/?originalSubdomain=in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/50 flex items-center justify-center text-[#6F00FF] hover:bg-[#6F00FF] hover:text-white duration-300 cursor-pointer"
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-[#6F00FF] hover:bg-[#6F00FF] hover:text-white duration-300 shadow-[0_8px_25px_rgba(111,0,255,0.12)]"
               >
-                <FaLinkedinIn size={25} />
+                <FaLinkedinIn size={22} />
               </a>
             </div>
           </div>
 
           {/* Navigation */}
 
-          <div className="mt-0 lg:mt-5">
+          <div className="mt-2 lg:mt-6">
             <h3 className="font-[Founders] text-[#6F00FF] text-3xl mb-6">
               Navigation
             </h3>
@@ -90,7 +88,10 @@ const Footer = () => {
                 Portfolio
               </Link>
 
-              <Link to="/contact" className="hover:text-[#6F00FF] duration-300">
+              <Link
+                to="/contact"
+                className="hover:text-[#6F00FF] duration-300"
+              >
                 Contact
               </Link>
             </div>
@@ -98,7 +99,7 @@ const Footer = () => {
 
           {/* Services */}
 
-          <div className="mt-0 lg:mt-5">
+          <div className="mt-2 lg:mt-6">
             <h3 className="font-[Founders] text-[#6F00FF] text-3xl mb-6">
               Services
             </h3>
@@ -118,7 +119,7 @@ const Footer = () => {
 
           {/* Contact */}
 
-          <div className="mt-0 lg:mt-5">
+          <div className="mt-2 lg:mt-6">
             <h3 className="font-[Founders] text-[#6F00FF] text-3xl mb-6">
               Contact
             </h3>
@@ -136,17 +137,15 @@ const Footer = () => {
                 <span>hey@creativelabstudio.in</span>
               </div>
 
-              <p className="leading-7 flex items-start gap-3">
-                <FaLocationDot className="text-[#6F00FF] mt-1 text-lg shrink-0" />
+              <div className="flex items-start gap-4 leading-7">
+                <FaLocationDot className="mt-1 text-[#6F00FF] text-lg shrink-0" />
 
                 <span>
-                  MIG 145,
-                  
-                  KPHB ROAD NO1,
+                  MIG 145, KPHB ROAD NO1,
                   <br />
                   Hyderabad 500072
                 </span>
-              </p>
+              </div>
             </div>
           </div>
         </div>

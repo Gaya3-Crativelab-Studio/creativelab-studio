@@ -26,7 +26,7 @@ const clients = [
   {
     id: 5,
     name: "Logo Yellow",
-    logo: "https://res.cloudinary.com/dcnmzhp9k/image/upload/w_400,h_200,c_fit/f_auto,q_auto/v1779850975/Logo_Yellow_2x_cnpkzp.png",
+    logo: "https://res.cloudinary.com/dcnmzhp9k/image/upload/w_300,h_200,c_fit/f_auto,q_auto/v1779959286/Logo_Green_d3k35a.svg",
   },
 
   {
