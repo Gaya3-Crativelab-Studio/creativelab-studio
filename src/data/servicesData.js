@@ -6,6 +6,8 @@ import {
   HiOutlineSquares2X2,
   HiOutlineCube,
   HiOutlineBuildingOffice,
+  HiOutlineHeart,
+  HiOutlineCpuChip,
 } from "react-icons/hi2";
 
 const services = [
@@ -71,6 +73,29 @@ const services = [
     title: "Corporate Branding",
     icon: HiOutlineBuildingOffice,
     items: ["Store Branding", "Kiosk Branding", "Print Branding"],
+  },
+
+  {
+    title: "Wedding & Personal Branding",
+    icon: HiOutlineHeart,
+    items: [
+      "Wedding Invitations",
+      "Couple Branding",
+      "Event Visual Design",
+    ],
+  },
+
+  {
+    title: "AI-Assisted Creative Solutions",
+    icon: HiOutlineCpuChip,
+    items: [
+      "AI-Powered Content Creation",
+      "Creative Automation",
+      "AI-Assisted Design Workflows",
+      "Marketing Content Production",
+      "Brand Content Generation",
+      "Business Content Optimization",
+    ],
   },
 ];
 
