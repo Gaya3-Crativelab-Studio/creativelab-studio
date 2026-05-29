@@ -90,7 +90,6 @@ const services = [
     icon: HiOutlineCpuChip,
     items: [
       "AI-Powered Content Creation",
-      "Creative Automation",
       "AI-Assisted Design Workflows",
       "Marketing Content Production",
       "Brand Content Generation",
