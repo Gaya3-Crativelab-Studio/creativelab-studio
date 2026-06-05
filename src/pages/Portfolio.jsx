@@ -189,15 +189,15 @@ const Portfolio = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
-              className="fixed inset-0 z-[999] bg-white/20 p-5 backdrop-blur-xl flex items-center justify-center p-3 lg:p-8"
+              className="fixed inset-0 z-[999] bg-white/20 backdrop-blur-xl flex items-center justify-center p-3 lg:p-8"
             >
               {/* Close */}
 
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 lg:top-8 lg:right-8 text-white z-30 cursor-pointer hover:rotate-90 duration-300"
+                className="absolute top-4 right-4 lg:top-8 lg:right-8 bg-black/50 hover:bg-[#6F00FF] rounded-full shadow-md text-white z-30 cursor-pointer hover:rotate-90 duration-300"
               >
-                <HiXMark size={40} />
+                <HiXMark size={40}/>
               </button>
 
               <motion.div
@@ -212,7 +212,7 @@ const Portfolio = () => {
 
                 {/* Main Image */}
 
-                <div className="relative w-full flex items-center justify-center">
+                <div className="relative w-full h-[65vh] flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={currentImage}
@@ -225,17 +225,7 @@ const Portfolio = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.97 }}
                       transition={{ duration: 0.35 }}
-                      className="
-        w-auto
-        max-w-[92vw]
-        lg:max-w-[80vw]
-        max-h-[65vh]
-        lg:max-h-[72vh]
-        object-contain
-        rounded-[28px]
-        bg-[#111111]
-        shadow-[0_20px_80px_rgba(0,0,0,0.45)]
-      "
+                      className=" w-auto max-w-[92vw] max-h-full  lg:max-w-[80vw] lg:max-h-[72vh] object-contain rounded-[28px] bg-[#111111] shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
                     />
                   </AnimatePresence>
 
@@ -244,7 +234,7 @@ const Portfolio = () => {
                   {selectedProject.images?.length > 1 && (
                     <button
                       onClick={prevImage}
-                      className="absolute left-2 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300"
+                      className="absolute left-2 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300 cursor-pointer"
                     >
                       <HiOutlineArrowLeft size={24} />
                     </button>
@@ -255,7 +245,7 @@ const Portfolio = () => {
                   {selectedProject.images?.length > 1 && (
                     <button
                       onClick={nextImage}
-                      className="absolute right-2 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300"
+                      className="absolute right-2 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300 cursor-pointer"
                     >
                       <HiOutlineArrowRight size={24} />
                     </button>

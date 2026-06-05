@@ -54,13 +54,12 @@ const Testimonials = () => {
               {/* Profile */}
 
               <div className="flex items-center gap-4 mb-10">
-                <div className="w-16 h-16 rounded-full bg-[#6F00FF]/10 flex items-center justify-center border border-[#E4D8FF] overflow-hidden shrink-0">
+                <div className="w-16 h-16 rounded-full bg-[#6F00FF]/10 flex items-center justify-center border border-[#E4D8FF] overflow-hidden">
                   {item.logo ? (
                     <img
                       src={item.logo}
                       alt={item.name}
-                      className="w-10 h-10 object-center"
-                      loading="lazy"
+                      className="max-w-[85%] max-h-[85%] object-contain"
                     />
                   ) : (
                     <FaUserCircle className="text-[#6F00FF] text-[38px]" />

@@ -1,6 +1,7 @@
 const testimonialsData = [
   {
     id: "01",
+    logo:"https://res.cloudinary.com/dcnmzhp9k/image/upload/w_150,h_150,c_fit/v1780657581/VVC_Logo_mwgtco.png",
     name: "M. Rahul Varma",
     role: "Managing Director, VV Constructions",
     text: "Working with CreativeLab Studio was a great decision. They created a strong logo and a well-structured brand book that gave our brand a clear and consistent identity. The process was smooth, communication was excellent, and the final outcome was exactly what we needed. We would gladly work with them again and highly recommend their services.",

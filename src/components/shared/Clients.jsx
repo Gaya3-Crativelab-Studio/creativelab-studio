@@ -45,11 +45,11 @@ const Clients = () => {
               key={index}
               className="mx-6 sm:mx-8 lg:mx-12 shrink-0 flex items-center justify-center"
             >
-              <div className="flex items-center justify-center h-[220px] sm:h-[260px] lg:h-[300px] justify-center">
+              <div className="w-[220px] h-[180px] sm:w-[260px] sm:h-[220px] lg:w-[300px] lg:h-[260px] flex items-center justify-center">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-[140px] sm:max-h-[170px] lg:max-h-[220px] w-auto object-contain transition-all duration-500 hover:scale-105"
+                  className={`${client.logoClass || "max-w-[140px] max-h-[90px]"} object-contain transition-all duration-500 hover:scale-105`}
                 />
               </div>
             </div>

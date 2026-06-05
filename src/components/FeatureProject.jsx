@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 import projects from "../data/projects";
+import { useNavigate } from "react-router-dom";
 
 const CARD_W = 620;
 const GAP = 32;
@@ -10,6 +11,8 @@ const EXTRA_SPACE = 200;
 export default function FeatureProject() {
   const sectionRef = useRef(null);
   const cardsRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const [hoveringCards, setHoveringCards] = useState(false);
 
@@ -79,8 +82,7 @@ export default function FeatureProject() {
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col ">
         <div className="px-6 lg:px-10 flex flex-col align-items mb-16 mt-10">
-          
-          <h2 className="font-[Founders] text-center text-[#6F00FF] text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
+          <h2 className="font-[Founders] text-center text-[#6F00FF] mt-5 pt-5 text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
             Selected projects & visual stories
             <span className="text-[#6F00FF]">.</span>
           </h2>
@@ -148,7 +150,10 @@ export default function FeatureProject() {
           </div>
 
           <div className="flex justify-center mt-10">
-            <button className="bg-[#7B68EE] hover:bg-[#6F00FF] border border-white/90 text-white font-[Nexa] font-bold px-10 py-4 rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_12px_35px_rgba(123,104,238,0.30),0_0_25px_rgba(123,104,238,0.18)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_18px_45px_rgba(111,0,255,0.40)] duration-300 hover:scale-105 cursor-pointer">
+            <button
+              onClick={() => navigate("/portfolio")}
+              className="bg-[#7B68EE] hover:bg-[#6F00FF] border border-white/90 text-white font-[Nexa] font-bold px-10 py-4 rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_12px_35px_rgba(123,104,238,0.30),0_0_25px_rgba(123,104,238,0.18)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_18px_45px_rgba(111,0,255,0.40)] duration-300 hover:scale-105 cursor-pointer"
+            >
               View All
             </button>
           </div>
