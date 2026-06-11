@@ -1,8 +1,7 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-
-import projects from "../data/projects";
 import { useNavigate } from "react-router-dom";
+import projects from "../data/projects";
 
 const CARD_W = 620;
 const GAP = 32;
@@ -13,8 +12,6 @@ export default function FeatureProject() {
   const cardsRef = useRef(null);
 
   const navigate = useNavigate();
-
-  const [hoveringCards, setHoveringCards] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -64,7 +61,9 @@ export default function FeatureProject() {
       });
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel, {
+      passive: false,
+    });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
@@ -75,71 +74,76 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] h-screen"
+      className="relative bg-[#ECE7FF]"
       style={{
         height: `${100 + projects.length * 75}vh`,
       }}
     >
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col ">
-        <div className="px-6 lg:px-10 flex flex-col align-items mb-16 mt-10">
-          <h2 className="font-[Founders] text-center text-[#6F00FF] mt-5 pt-5 text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+        {/* Heading */}
+        <div className="px-6 lg:px-10 mt-18 lg:mt-10 mb-8 lg:mb-16">
+          <h2 className="font-[Founders] text-center text-[#6F00FF] text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
             Selected projects & visual stories
-            <span className="text-[#6F00FF]">.</span>
+            <span>.</span>
           </h2>
 
-          <p className="font-[Nexa] text-sm sm:text-base lg:text-xl text-[#111111] max-w-[320px] sm:max-w-[650px] lg:max-w-[1100px] mx-auto mt-6 leading-7 sm:leading-8 text-center px-4">
+          <p className="font-[Nexa] text-sm sm:text-base lg:text-xl text-[#111111] max-w-[320px] sm:max-w-[650px] lg:max-w-[1100px] mx-auto mt-5 lg:mt-6 leading-7 sm:leading-8 text-center px-4">
             A curated collection of branding, digital experiences, and visual
             systems designed for modern brands across fashion, beauty,
             lifestyle, hospitality, and emerging businesses.
           </p>
         </div>
 
-        <motion.div
-          ref={cardsRef}
-          onMouseEnter={() => setHoveringCards(true)}
-          onMouseLeave={() => setHoveringCards(false)}
-          style={{
-            x: smoothX,
-          }}
-          className="flex gap-8 pl-6 lg:pl-10"
-        >
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              whileHover={{
-                y: -10,
-              }}
-              transition={{
-                duration: 0.35,
-              }}
-              className="group relative shrink-0 w-70 sm:w-105 lg:w-120 h-72 sm:h-85 rounded-4xl overflow-hidden shadow-[0_20px_55px_rgba(111,0,255,0.10)] cursor-pointer"
-            >
-              <img
-                src={project.image}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
-              />
+        {/* Cards */}
+        <div className="flex-1 flex items-center">
+          <motion.div
+            ref={cardsRef}
+            style={{ x: smoothX }}
+            className="flex gap-6 lg:gap-8 pl-6 lg:pl-10"
+          >
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.35 }}
+                className="group relative shrink-0
+                w-[280px] sm:w-[420px] lg:w-[480px]
+                h-[320px] sm:h-[340px]
+                rounded-[32px]
+                overflow-hidden
+                shadow-[0_20px_55px_rgba(111,0,255,0.10)]
+                cursor-pointer"
+              >
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
+                />
 
-              <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
-              <div className="absolute bottom-8 left-8 right-8">
-                <h3 className="font-[Founders] text-white text-3xl lg:text-4xl mb-2">
-                  {project.title}
-                </h3>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="font-[Founders] text-white text-3xl lg:text-4xl mb-2">
+                    {project.title}
+                  </h3>
 
-                <p className="font-[Nexa] text-[#C7FF3F]">{project.category}</p>
-              </div>
+                  <p className="font-[Nexa] text-[#C7FF3F]">
+                    {project.category}
+                  </p>
+                </div>
 
-              <div className="absolute top-6 right-6 w-10 h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-sm">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-            </motion.div>
-          ))}
+                <div className="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-sm">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+              </motion.div>
+            ))}
 
-          <div className="w-62.5 sm:w-87.5 lg:w-125 shrink-0" />
-        </motion.div>
+            <div className="w-32 lg:w-125 shrink-0" />
+          </motion.div>
+        </div>
 
-        <div className="px-6 lg:px-10 mt-12">
+        {/* Progress */}
+        <div className="px-6 lg:px-10 mt-4">
           <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
             <motion.div
               style={{
@@ -149,10 +153,23 @@ export default function FeatureProject() {
             />
           </div>
 
-          <div className="flex justify-center mt-10">
+          {/* Button */}
+          <div className="flex justify-center mt-5 mb-6">
             <button
               onClick={() => navigate("/portfolio")}
-              className="bg-[#7B68EE] hover:bg-[#6F00FF] border border-white/90 text-white font-[Nexa] font-bold px-10 py-4 rounded-full shadow-[0_2px_10px_rgba(123,104,238,0.22)] hover:shadow-[0_4px_14px_rgba(111,0,255,0.3)] duration-300 hover:scale-105 cursor-pointer"
+              className="bg-[#7B68EE]
+              hover:bg-[#6F00FF]
+              text-white
+              font-[Nexa]
+              font-bold
+              px-10
+              py-4
+              rounded-full
+              shadow-[0_4px_14px_rgba(111,0,255,0.25)]
+              hover:shadow-[0_6px_18px_rgba(111,0,255,0.35)]
+              duration-300
+              hover:scale-105
+              cursor-pointer"
             >
               View All
             </button>
