@@ -343,7 +343,7 @@ const Contact = () => {
           {/* FAQ */}
 
           <div className="mt-32">
-            <h2 className="font-[Founders] text-center text-5xl lg:text-7xl leading-[0.95] mb-16">
+            <h2 className="font-[Founders] text-black text-center text-5xl lg:text-7xl leading-[0.95] mb-16">
               These FAQs help
               <span className="text-[#6F00FF]"> ✱ </span>
               <br />

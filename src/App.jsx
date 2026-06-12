@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -13,10 +13,27 @@ import TermsConditions from "./components/TermsConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 
 function App() {
+  const location = useLocation();
+
+  const validRoutes = [
+    "/",
+    "/about",
+    "/services",
+    "/portfolio",
+    "/contact",
+    "/discovery-call",
+    "/terms-and-conditions",
+    "/privacy-policy",
+  ];
+
+  const showNavbar = validRoutes.includes(location.pathname);
+
   return (
     <>
       <ScrollToTop />
-      <NavBar />
+
+      {showNavbar && <NavBar />}
+
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -30,11 +47,11 @@ function App() {
 
         <Route path="/discovery-call" element={<DiscoveryCall />} />
 
-        <Route path="*" element={<PageNotFound />} />
-
         <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );
