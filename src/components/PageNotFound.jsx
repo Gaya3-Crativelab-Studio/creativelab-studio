@@ -165,6 +165,17 @@ const PageNotFound = () => {
         <div className="absolute left-1/2 top-16 -translate-x-1/2 w-[250px] h-[250px] bg-[#6F00FF]/20 rounded-full blur-[120px] -z-10" />
 
         {/* 404 */}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.08 }}
+          transition={{ duration: 1 }}
+          className="absolute left-1/2 top-[150px] -translate-x-1/2 text-[200px] font-black text-white pointer-events-none hidden md:block"
+        >
+          {" "}
+          404{" "}
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 80 }}
           whileInView={{ opacity: 1, y: 0 }}
