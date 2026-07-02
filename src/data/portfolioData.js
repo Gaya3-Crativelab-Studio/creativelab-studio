@@ -119,39 +119,82 @@ const portfolioData = [
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/f_auto,q_auto,w_900/v1779850942/IMG_0192_ujkeym.jpg",
   },
   {
-  id: 12,
-  title: "Luxury Skincare Visual",
-  category: "Product Photography",
-  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_1_oa7ikq.jpg",
-},
+    id: 12,
+    title: "Luxury Skincare Visual",
+    category: "Product Photography",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_1_oa7ikq.jpg",
+  },
 
-{
-  id: 13,
-  title: "Dessert Brand Styling",
-  category: "Food Photography",
-  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976640/WhatsApp_Image_2026-05-28_at_09.48.58_2_hujpsp.jpg",
-},
+  {
+    id: 13,
+    title: "Dessert Brand Styling",
+    category: "Food Photography",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976640/WhatsApp_Image_2026-05-28_at_09.48.58_2_hujpsp.jpg",
+  },
 
-{
-  id: 14,
-  title: "Cupcake Campaign Visual",
-  category: "Creative Photography",
-  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_aom3qk.jpg",
-},
+  {
+    id: 14,
+    title: "Cupcake Campaign Visual",
+    category: "Creative Photography",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976639/WhatsApp_Image_2026-05-28_at_09.48.58_aom3qk.jpg",
+  },
 
-{
-  id: 15,
-  title: "Jewellery Flatlay Showcase",
-  category: "Jewellery Branding",
-  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976642/WhatsApp_Image_2026-05-28_at_09.48.59_1_q5zfgd.jpg",
-},
+  {
+    id: 15,
+    title: "Jewellery Flatlay Showcase",
+    category: "Jewellery Branding",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976642/WhatsApp_Image_2026-05-28_at_09.48.59_1_q5zfgd.jpg",
+  },
 
-{
-  id: 16,
-  title: "Luxury Ring Product Shot",
-  category: "Product Styling",
-  image: "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976641/WhatsApp_Image_2026-05-28_at_09.48.59_chadsw.jpg",
-},
+  {
+    id: 16,
+    title: "Luxury Ring Product Shot",
+    category: "Product Styling",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779976641/WhatsApp_Image_2026-05-28_at_09.48.59_chadsw.jpg",
+  },
+  {
+    id: 17,
+    title: "GreatfulHeads Salon Brochure",
+    category: "Brochure Design",
+    images: [
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881359/1_2_mpwdjd.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881361/2_2_ylgyqu.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881360/3_2_kpemuq.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881358/4_2_hcbpju.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881357/5_1_nufczy.jpg",
+    ],
+  },
+  {
+    id: 18,
+    title: "Urban Reflections Furniture Brochure",
+    category: "Brochure Design",
+    images: [
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881362/2_jszbsv.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881362/3_iu3640.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881361/4_by9hpd.jpg",
+    ],
+  },
+  {
+    id: 19,
+    title: "World Environment Day Campaign",
+    category: "Social Media Design",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881358/Haailand_post_xyfnma.jpg",
+  },
+  {
+    id: 20,
+    title: "SAP Victorian Jewelry Campaign",
+    category: "Social Media Design",
+    images: [
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881359/SAP_Victorian_jewels_fwhe6j.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881359/SAP_Victorian_jewels_fwhe6j.jpg",
+    ],
+  },
 ];
 
 export default portfolioData;

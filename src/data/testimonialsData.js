@@ -22,6 +22,13 @@ const testimonialsData = [
     role: "CEO & Co-founder, PeelON",
     text: "CreativeLab Studio has contributed significantly to creating a professional and consistent brand presence for PeelON. Their design work across print and digital platforms has helped improve the company's brand perception. They demonstrate strong design execution and collaboration skills, helping create effective and impactful brand experiences.",
   },
+  {
+    id: "04",
+    logo:"https://res.cloudinary.com/dcnmzhp9k/image/upload/v1779850989/Spices_With_Stories_Logo_FInal_2x_aue9ce.png",
+    name: "Meena Krishna",
+    role: "Founder, Spices with Stories & MeenaTalks",
+    text: "Working with CreativeLab Studio was an absolute pleasure. They designed logos for two very different brands — Spices with Stories and Meenatalks. What impressed me most was how deeply they listened and understood the soul of each brand. They were patient through revisions, generous with ideas, and quick to grasp the cultural nuance I cared about. I would recommend them to anyone who wants a creative team that treats your brand like a story worth telling.",
+  },
 ];
 
 export default testimonialsData;

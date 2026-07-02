@@ -1,6 +1,6 @@
 import PageHero from "../components/shared/PageHero";
 import MarqueeStrip from "../components/about/MarqueeStrip";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import portfolioData from "../data/portfolioData";
 import {
@@ -14,6 +14,8 @@ const Portfolio = () => {
   const [active, setActive] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const touchStartX = useRef(null);
 
   // Lock body scroll
   useEffect(() => {
@@ -27,6 +29,7 @@ const Portfolio = () => {
   const nextImage = useCallback(() => {
     if (!selectedProject) return;
 
+    setIsImageLoading(true);
     setCurrentImage((prev) =>
       prev + 1 >= selectedProject.images.length ? 0 : prev + 1,
     );
@@ -35,6 +38,7 @@ const Portfolio = () => {
   const prevImage = useCallback(() => {
     if (!selectedProject) return;
 
+    setIsImageLoading(true);
     setCurrentImage((prev) =>
       prev === 0 ? selectedProject.images.length - 1 : prev - 1,
     );
@@ -144,6 +148,7 @@ const Portfolio = () => {
                   onClick={() => {
                     setSelectedProject(item);
                     setCurrentImage(0);
+                    setIsImageLoading(true);
                   }}
                   className="group relative overflow-hidden rounded-2xl cursor-pointer bg-[#F8F8F8] shadow-[0_12px_45px_rgba(0,0,0,0.08)] duration-500 hover:scale-[0.97]"
                 >
@@ -178,114 +183,148 @@ const Portfolio = () => {
           </motion.div>
         </div>
 
-        {/* Modal */}
-
-        {/* Modal */}
-
         <AnimatePresence>
           {selectedProject && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={() => setSelectedProject(null)}
-              className="fixed inset-0 z-[999] bg-white/20 backdrop-blur-xl flex items-center justify-center p-3 lg:p-8"
+              className="fixed inset-0 z-999 flex items-center justify-center overflow-y-auto bg-[rgba(12,12,18,0.75)] px-2 py-3 backdrop-blur-[18px] sm:px-3 sm:py-4 lg:px-4"
             >
-              {/* Close */}
-
               <button
+                aria-label="Close preview"
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 lg:top-8 lg:right-8 bg-black/50 hover:bg-[#6F00FF] rounded-full shadow-md text-white z-30 cursor-pointer hover:rotate-90 duration-300"
+                className="absolute right-3 top-3 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition duration-300 hover:-rotate-6 hover:scale-105 hover:bg-white/20 sm:right-4 sm:top-4 sm:h-12 sm:w-12 md:h-14 md:w-14"
               >
-                <HiXMark size={40}/>
+                <HiXMark size={20} className="sm:size-22 md:size-24" />
               </button>
 
               <motion.div
-                initial={{ scale: 0.94, opacity: 0 }}
+                initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.94, opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 140,
+                  damping: 22,
+                  mass: 0.8,
+                }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-[1100px] flex flex-col items-center"
+                className="relative w-[95vw] max-w-275 overflow-hidden rounded-4xl border border-white/10 bg-[rgba(255,255,255,0.08)] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[90vw] sm:max-w-262.5 sm:p-3 md:max-w-275 lg:max-w-280 lg:p-3"
               >
-                {/* Main Image */}
+                <div
+                  className="relative flex flex-col gap-3"
+                  onTouchStart={(e) => {
+                    touchStartX.current = e.touches[0].clientX;
+                  }}
+                  onTouchEnd={(e) => {
+                    if (touchStartX.current === null) return;
+                    const delta =
+                      e.changedTouches[0].clientX - touchStartX.current;
+                    if (delta > 70) prevImage();
+                    if (delta < -70) nextImage();
+                    touchStartX.current = null;
+                  }}
+                >
+                  <div className="relative h-[72vh] overflow-hidden rounded-[28px] bg-[#0F071F] sm:h-[74vh] md:h-[76vh]">
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={`${selectedProject.id}-${currentImage}`}
+                        src={
+                          selectedProject.images?.[currentImage] ||
+                          selectedProject.image
+                        }
+                        alt={selectedProject.title}
+                        initial={{ opacity: 0, scale: 1.02 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.02 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        onLoad={() => setIsImageLoading(false)}
+                        className="h-full w-full object-cover"
+                      />
+                    </AnimatePresence>
 
-                {/* Main Image */}
+                    {isImageLoading && (
+                      <div className="absolute inset-0 animate-pulse bg-[#1f103a]" />
+                    )}
 
-                <div className="relative w-full h-[65vh] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={currentImage}
-                      src={
-                        selectedProject.images?.[currentImage] ||
-                        selectedProject.image
-                      }
-                      alt={selectedProject.title}
-                      initial={{ opacity: 0, scale: 0.97 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.97 }}
-                      transition={{ duration: 0.35 }}
-                      className=" w-auto max-w-[92vw] max-h-full  lg:max-w-[80vw] lg:max-h-[72vh] object-contain rounded-[28px] bg-[#111111] shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
-                    />
-                  </AnimatePresence>
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.18)_35%,rgba(0,0,0,0.8)_100%)]" />
 
-                  {/* Left Arrow */}
+                    <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 sm:p-5 lg:p-6">
+                      <div className="mb-3 flex flex-wrap items-center gap-2 sm:gap-3">
+                        <span className="rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/90 backdrop-blur-md sm:text-[11px]">
+                          {selectedProject.category}
+                        </span>
+                        <span className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.3em] text-white/80 backdrop-blur-md sm:text-[11px]">
+                          {currentImage + 1} /{" "}
+                          {selectedProject.images?.length || 1}
+                        </span>
+                      </div>
 
-                  {selectedProject.images?.length > 1 && (
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-2 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300 cursor-pointer"
-                    >
-                      <HiOutlineArrowLeft size={24} />
-                    </button>
-                  )}
-
-                  {/* Right Arrow */}
-
-                  {selectedProject.images?.length > 1 && (
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-2 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 lg:w-14 lg:h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-[#6F00FF] duration-300 cursor-pointer"
-                    >
-                      <HiOutlineArrowRight size={24} />
-                    </button>
-                  )}
-                </div>
-
-                {/* Thumbnails */}
-
-                {selectedProject.images?.length > 1 && (
-                  <div className="flex gap-3 mt-6 overflow-x-auto max-w-full pb-2 px-1 scrollbar-hide">
-                    {selectedProject.images.map((img, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImage(index)}
-                        className={`relative shrink-0 min-w-[90px] lg:min-w-[110px] h-20 lg:h-24 rounded-2xl overflow-hidden border-2 duration-300 ${
-                          currentImage === index
-                            ? "border-[#6F00FF] scale-105"
-                            : "border-transparent opacity-50 hover:opacity-100"
-                        }`}
-                      >
-                        <img
-                          src={img}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
+                      <div className="max-w-2xl">
+                        <h3 className="font-[Founders] text-2xl leading-tight text-white sm:text-3xl lg:text-4xl">
+                          {selectedProject.title}
+                        </h3>
+                      </div>
+                    </div>
                   </div>
-                )}
 
-                {/* Title */}
+                  {selectedProject.images?.length > 1 && (
+                    <div className="flex items-center justify-center gap-2 px-1 sm:gap-3">
+                      <motion.button
+                        whileHover={{ scale: 1.04, y: -1 }}
+                        transition={{ duration: 0.2 }}
+                        aria-label="Previous image"
+                        onClick={prevImage}
+                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:bg-white/20 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                      >
+                        <HiOutlineArrowLeft
+                          size={20}
+                          className="sm:size-22 md:size-24"
+                        />
+                      </motion.button>
 
-                <div className="mt-8 text-center">
-                  <h3 className="font-[Founders] text-black text-3xl lg:text-5xl leading-tight">
-                    {selectedProject.title}
-                  </h3>
+                      <div className="flex max-w-full items-center justify-center gap-2 overflow-x-auto px-1 pb-1 sm:gap-3">
+                        {selectedProject.images.map((img, index) => (
+                          <motion.button
+                            key={index}
+                            whileHover={{ scale: 1.03, y: -2 }}
+                            transition={{ duration: 0.2 }}
+                            onClick={() => {
+                              setCurrentImage(index);
+                              setIsImageLoading(true);
+                            }}
+                            className={`relative h-16 shrink-0 cursor-pointer overflow-hidden rounded-2xl border transition-all duration-300 sm:h-20 md:h-24 ${
+                              currentImage === index
+                                ? "w-20 border-[#6F00FF] shadow-[0_0_0_1px_rgba(111,0,255,0.2),0_10px_30px_rgba(111,0,255,0.18)] sm:w-24 md:w-28"
+                                : "w-16 border-white/20 opacity-70 hover:opacity-100 sm:w-20 md:w-24"
+                            }`}
+                          >
+                            <img
+                              src={img}
+                              alt=""
+                              className="h-full w-full object-cover"
+                            />
+                          </motion.button>
+                        ))}
+                      </div>
 
-                  <p className="font-[Nexa] text-purple-500 mt-3 text-base lg:text-lg tracking-wide">
-                    {selectedProject.category}
-                  </p>
+                      <motion.button
+                        whileHover={{ scale: 1.04, y: -1 }}
+                        transition={{ duration: 0.2 }}
+                        aria-label="Next image"
+                        onClick={nextImage}
+                        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:bg-white/20 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                      >
+                        <HiOutlineArrowRight
+                          size={20}
+                          className="sm:size-22 md:size-24"
+                        />
+                      </motion.button>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </motion.div>
