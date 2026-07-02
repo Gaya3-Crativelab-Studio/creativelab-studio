@@ -226,7 +226,7 @@ export default function TeamCard({ member, index, size = "default" }) {
           <motion.button
             variants={ctaButtonVariants}
             whileTap={{ scale: 0.98 }}
-            className={`${ctaButtonClass} mt-3 mb-1 px-5 cursor-pointer`}
+            className={`${ctaButtonClass} mt-3 mb-1 md:px-5 cursor-pointer`}
           >
             View Profile
             <ArrowUpRight size={ctaIconSize} />
