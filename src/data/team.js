@@ -2,7 +2,7 @@ const team = [
   {
     id: 1,
     name: "Gayathri",
-    role: "UI UX Expert",
+    role: "Founder & Creative Head",
     image:
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783491165/Gayathri_ycijr9.jpg",
 
@@ -56,7 +56,7 @@ const team = [
     name: "Harshit",
     role: "Web Development Lead",
     image:
-      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782995577/WhatsApp_Image_2026-07-01_at_18.51.19_so6krj.jpg",
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783495524/Harshit_y1myin.jpg",
 
     bg: "#FFE89C",
     profileLink: "",
