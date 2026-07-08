@@ -189,7 +189,7 @@ const descTextClass = isSmall
       <div
         className={`relative z-40 shrink-0 pointer-events-none text-center ${headerPadClass}`}
       >
-        <h3 className={`font-[Founders] text-[#6F00FF] ${nameTextClass} mt-2`}>
+        <h3 className={`font-[Founders] text-[#000] ${nameTextClass} mt-2`}>
           {member.name}
         </h3>
         <p className={`font-[Nexa] text-[#555] ${roleTextClass}`}>

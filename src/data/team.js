@@ -6,7 +6,7 @@ const team = [
     image:
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783491165/Gayathri_ycijr9.jpg",
 
-    bg: "#CCCCFF",
+    bg: "#ECE7FF",
     description:
       "Leading CreativeLab Studio with strategic branding, visual storytelling, and innovative design, transforming ideas into meaningful brand experiences that inspire, connect, and leave lasting impressions.",
   },
@@ -49,7 +49,7 @@ const team = [
 
   {
     id: 5,
-    name: "Harshit",
+    name: "Harshith",
     role: "Web Development Lead",
     image:
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783495524/Harshit_y1myin.jpg",
