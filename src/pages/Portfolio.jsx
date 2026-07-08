@@ -183,6 +183,7 @@ const Portfolio = () => {
           </motion.div>
         </div>
 
+        {/* ============ LIGHTBOX-STYLE PREVIEW MODAL ============ */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
@@ -191,141 +192,103 @@ const Portfolio = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={() => setSelectedProject(null)}
-              className="fixed inset-0 z-999 flex items-center justify-center overflow-y-auto bg-[rgba(12,12,18,0.75)] px-2 py-3 backdrop-blur-[18px] sm:px-3 sm:py-4 lg:px-4"
+              className="fixed inset-0 z-999 flex items-center justify-center px-4 sm:px-6"
+              style={{ backgroundColor: "rgba(10,10,15,0.82)" }}
             >
-              <button
+              {/* Close button - top right, page level */}
+              <motion.button
+                whileHover={{ scale: 1.08, backgroundColor: "#6F00FF" }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
                 aria-label="Close preview"
                 onClick={() => setSelectedProject(null)}
-                className="absolute right-3 top-3 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition duration-300 hover:-rotate-6 hover:scale-105 hover:bg-white/20 sm:right-4 sm:top-4 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                className="absolute right-5 top-5 z-30 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-white sm:right-8 sm:top-8 sm:h-12 sm:w-12"
+                style={{ backgroundColor: "rgba(20,20,25,0.55)" }}
               >
-                <HiXMark size={20} className="sm:size-22 md:size-24" />
-              </button>
+                <HiXMark size={22} className="text-white" />
+              </motion.button>
 
+              {/* Prev - floats at far edge of viewport */}
+              {selectedProject.images?.length > 1 && (
+                <motion.button
+                  whileHover={{ scale: 1.08, backgroundColor: "#6F00FF" }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  aria-label="Previous image"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevImage();
+                  }}
+                  className="absolute left-3 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white sm:left-6 sm:h-14 sm:w-14 lg:left-10"
+                  style={{ backgroundColor: "rgba(20,20,25,0.55)" }}
+                >
+                  <HiOutlineArrowLeft size={22} className="text-white" />
+                </motion.button>
+              )}
+
+              {/* Next - floats at far edge of viewport */}
+              {selectedProject.images?.length > 1 && (
+                <motion.button
+                  whileHover={{ scale: 1.08, backgroundColor: "#6F00FF" }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  aria-label="Next image"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextImage();
+                  }}
+                  className="absolute right-3 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white sm:right-6 sm:h-14 sm:w-14 lg:right-10"
+                  style={{ backgroundColor: "rgba(20,20,25,0.55)" }}
+                >
+                  <HiOutlineArrowRight size={22} className="text-white" />
+                </motion.button>
+              )}
+
+              {/* Image stage - large, centered, contained, no crop */}
               <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
+                initial={{ scale: 0.96, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
+                exit={{ scale: 0.96, opacity: 0 }}
                 transition={{
                   type: "spring",
-                  stiffness: 140,
-                  damping: 22,
+                  stiffness: 160,
+                  damping: 24,
                   mass: 0.8,
                 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-[95vw] max-w-275 overflow-hidden rounded-4xl border border-white/10 bg-[rgba(255,255,255,0.08)] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[90vw] sm:max-w-262.5 sm:p-3 md:max-w-275 lg:max-w-280 lg:p-3"
+                className="relative flex h-[88vh] w-auto max-w-[85vw] items-center justify-center"
+                onTouchStart={(e) => {
+                  touchStartX.current = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  if (touchStartX.current === null) return;
+                  const delta =
+                    e.changedTouches[0].clientX - touchStartX.current;
+                  if (delta > 70) prevImage();
+                  if (delta < -70) nextImage();
+                  touchStartX.current = null;
+                }}
               >
-                <div
-                  className="relative flex flex-col gap-3"
-                  onTouchStart={(e) => {
-                    touchStartX.current = e.touches[0].clientX;
-                  }}
-                  onTouchEnd={(e) => {
-                    if (touchStartX.current === null) return;
-                    const delta =
-                      e.changedTouches[0].clientX - touchStartX.current;
-                    if (delta > 70) prevImage();
-                    if (delta < -70) nextImage();
-                    touchStartX.current = null;
-                  }}
-                >
-                  <div className="relative h-[72vh] overflow-hidden rounded-[28px] bg-[#0F071F] sm:h-[74vh] md:h-[76vh]">
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={`${selectedProject.id}-${currentImage}`}
-                        src={
-                          selectedProject.images?.[currentImage] ||
-                          selectedProject.image
-                        }
-                        alt={selectedProject.title}
-                        initial={{ opacity: 0, scale: 1.02 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.02 }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                        onLoad={() => setIsImageLoading(false)}
-                        className="h-full w-full object-cover"
-                      />
-                    </AnimatePresence>
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={`${selectedProject.id}-${currentImage}`}
+                    src={
+                      selectedProject.images?.[currentImage] ||
+                      selectedProject.image
+                    }
+                    alt={selectedProject.title}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    onLoad={() => setIsImageLoading(false)}
+                    className="max-h-[88vh] max-w-[85vw] rounded-2xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.5)]"
+                  />
+                </AnimatePresence>
 
-                    {isImageLoading && (
-                      <div className="absolute inset-0 animate-pulse bg-[#1f103a]" />
-                    )}
-
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.18)_35%,rgba(0,0,0,0.8)_100%)]" />
-
-                    <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 sm:p-5 lg:p-6">
-                      <div className="mb-3 flex flex-wrap items-center gap-2 sm:gap-3">
-                        <span className="rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/90 backdrop-blur-md sm:text-[11px]">
-                          {selectedProject.category}
-                        </span>
-                        <span className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.3em] text-white/80 backdrop-blur-md sm:text-[11px]">
-                          {currentImage + 1} /{" "}
-                          {selectedProject.images?.length || 1}
-                        </span>
-                      </div>
-
-                      <div className="max-w-2xl">
-                        <h3 className="font-[Founders] text-2xl leading-tight text-white sm:text-3xl lg:text-4xl">
-                          {selectedProject.title}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-
-                  {selectedProject.images?.length > 1 && (
-                    <div className="flex items-center justify-center gap-2 px-1 sm:gap-3">
-                      <motion.button
-                        whileHover={{ scale: 1.04, y: -1 }}
-                        transition={{ duration: 0.2 }}
-                        aria-label="Previous image"
-                        onClick={prevImage}
-                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:bg-white/20 sm:h-12 sm:w-12 md:h-14 md:w-14"
-                      >
-                        <HiOutlineArrowLeft
-                          size={20}
-                          className="sm:size-22 md:size-24"
-                        />
-                      </motion.button>
-
-                      <div className="flex max-w-full items-center justify-center gap-2 overflow-x-auto px-1 pb-1 sm:gap-3">
-                        {selectedProject.images.map((img, index) => (
-                          <motion.button
-                            key={index}
-                            whileHover={{ scale: 1.03, y: -2 }}
-                            transition={{ duration: 0.2 }}
-                            onClick={() => {
-                              setCurrentImage(index);
-                              setIsImageLoading(true);
-                            }}
-                            className={`relative h-16 shrink-0 cursor-pointer overflow-hidden rounded-2xl border transition-all duration-300 sm:h-20 md:h-24 ${
-                              currentImage === index
-                                ? "w-20 border-[#6F00FF] shadow-[0_0_0_1px_rgba(111,0,255,0.2),0_10px_30px_rgba(111,0,255,0.18)] sm:w-24 md:w-28"
-                                : "w-16 border-white/20 opacity-70 hover:opacity-100 sm:w-20 md:w-24"
-                            }`}
-                          >
-                            <img
-                              src={img}
-                              alt=""
-                              className="h-full w-full object-cover"
-                            />
-                          </motion.button>
-                        ))}
-                      </div>
-
-                      <motion.button
-                        whileHover={{ scale: 1.04, y: -1 }}
-                        transition={{ duration: 0.2 }}
-                        aria-label="Next image"
-                        onClick={nextImage}
-                        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 hover:bg-white/20 sm:h-12 sm:w-12 md:h-14 md:w-14"
-                      >
-                        <HiOutlineArrowRight
-                          size={20}
-                          className="sm:size-22 md:size-24"
-                        />
-                      </motion.button>
-                    </div>
-                  )}
-                </div>
+                {isImageLoading && (
+                  <div className="absolute inset-0 animate-pulse rounded-2xl bg-[#15151C]" />
+                )}
               </motion.div>
             </motion.div>
           )}

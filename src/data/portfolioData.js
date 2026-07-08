@@ -195,6 +195,21 @@ const portfolioData = [
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1782881359/SAP_Victorian_jewels_fwhe6j.jpg",
     ],
   },
+  {
+    id: 21,
+    title: "Train Ticket Booking App UI",
+    category: "UI / UX Design",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783492234/Train_Ticketing_App_UI_udw0o8.png",
+  },
+
+  {
+    id: 22,
+    title: "HR Management Dashboard UI",
+    category: "UI / UX Design",
+    image:
+      "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783492228/HR_Management-UI_i9enmp.png",
+  },
 ];
 
 export default portfolioData;

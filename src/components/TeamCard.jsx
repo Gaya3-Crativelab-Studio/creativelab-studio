@@ -239,15 +239,24 @@ export default function TeamCard({ member, index, size = "default" }) {
             {member.description}
           </motion.p>
 
-          <motion.button
-            variants={ctaButtonVariants}
-            whileTap={{ scale: 0.97 }}
-            onClick={(e) => e.stopPropagation()}
-            className={`${ctaButtonClass} mb-1 cursor-pointer`}
-          >
-            View Profile
-            <ArrowUpRight size={ctaIconSize} />
-          </motion.button>
+          {member.profileLink && (
+            <motion.button
+              variants={ctaButtonVariants}
+              whileTap={{ scale: 0.97 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(
+                  member.profileLink,
+                  "_blank",
+                  "noopener,noreferrer",
+                );
+              }}
+              className={`${ctaButtonClass} mb-1 cursor-pointer`}
+            >
+              View Profile
+              <ArrowUpRight size={ctaIconSize} />
+            </motion.button>
+          )}
         </motion.div>
       </div>
     </motion.div>
