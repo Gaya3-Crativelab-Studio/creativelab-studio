@@ -44,7 +44,7 @@ const team = [
       "https://res.cloudinary.com/dcnmzhp9k/image/upload/v1783491030/JayThaker_zboccb.png",
     bg: "#F8F1E8",
     description:
-      "Driving digital growth through strategic marketing, SEO, content, and performance campaigns that increase brand visibility, audience engagement, measurable conversions, and long-term business success.",
+      "Designing intuitive digital experiences with user-focused interfaces that seamlessly combine creativity, usability, accessibility, and modern aesthetics to enhance engagement across every digital platform.",
   },
 
   {
