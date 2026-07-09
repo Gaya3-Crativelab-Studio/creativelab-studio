@@ -33,35 +33,40 @@ function App() {
   const showNavbar = validRoutes.includes(location.pathname);
 
   return (
-    <>
+    <div className="flex min-h-dvh flex-col bg-[#0a0a0a]">
       <ScrollToTop />
 
       {showNavbar && <NavBar />}
 
-      <ErrorBoundary>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
+      <div className="flex-1">
+        <ErrorBoundary>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
 
-            <Route path="/about" element={<About />} />
+              <Route path="/about" element={<About />} />
 
-            <Route path="/services" element={<Services />} />
+              <Route path="/services" element={<Services />} />
 
-            <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/portfolio" element={<Portfolio />} />
 
-            <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Contact />} />
 
-            <Route path="/discovery-call" element={<DiscoveryCall />} />
+              <Route path="/discovery-call" element={<DiscoveryCall />} />
 
-            <Route path="/terms-and-conditions" element={<TermsConditions />} />
+              <Route
+                path="/terms-and-conditions"
+                element={<TermsConditions />}
+              />
 
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </Suspense>
-      </ErrorBoundary>
-    </>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
+      </div>
+    </div>
   );
 }
 
