@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://creativelabstudio.in/</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
   <url>
     <loc>https://creativelabstudio.in/about</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
   <url>
     <loc>https://creativelabstudio.in/services</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
   <url>
     <loc>https://creativelabstudio.in/portfolio</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
   <url>
     <loc>https://creativelabstudio.in/contact</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
   <url>
     <loc>https://creativelabstudio.in/discovery-call</loc>
+    <lastmod>2026-07-09</lastmod>
   </url>
+
 </urlset>
