@@ -46,14 +46,14 @@ const Hero = () => {
               impression.
             </h1>
 
-            <p className="font-nexa text-[#555555] text-[16px] sm:text-base leading-7 mt-6 max-w-[540px]">
+            <p className="font-nexa text-[#555555] text-[16px] sm:text-base md:text-lg leading-7 mt-6 max-w-[540px]">
               CreativeLab Studio is a boutique creative agency helping founders
               and modern brands build refined identities, strategic digital
               marketing, and immersive websites that feel premium from the first
               impression.
             </p>
 
-            <p className="font-nexa text-[#555555] text-[16px] sm:text-base leading-7 mt-3 max-w-[540px]">
+            <p className="font-nexa text-[#555555] text-[16px] sm:text-base md:text-lg leading-7 mt-3 max-w-[540px]">
               From brand storytelling and social media content to SEO, motion
               graphics, and website development, we create elegant creative
               experiences that strengthen visibility, trust, and long-term
