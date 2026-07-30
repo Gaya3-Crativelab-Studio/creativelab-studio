@@ -6,7 +6,6 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import DevelopedByStaffArc from "./DevelopedByStaffArc";
 
 const Footer = () => {
   const logo =
@@ -88,10 +87,7 @@ const Footer = () => {
                 Portfolio
               </Link>
 
-              <Link
-                to="/contact"
-                className="hover:text-[#6F00FF] duration-300"
-              >
+              <Link to="/contact" className="hover:text-[#6F00FF] duration-300">
                 Contact
               </Link>
             </div>
@@ -156,7 +152,6 @@ const Footer = () => {
           <p className="font-nexa text-[#5D4C88] text-sm text-center lg:text-left">
             © 2026 CreativeLab Studio. Crafted with intention.
           </p>
-
 
           <div className="flex items-center gap-6 font-nexa text-sm text-[#5D4C88]">
             <Link
