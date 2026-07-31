@@ -23,20 +23,14 @@ export default function FeatureProject() {
       // Distance = how much wider the track is than the container that
       // actually clips it — NOT the browser window. This is what makes the
       // last card's right edge land exactly on the container's right edge,
-      // with no trailing spacer needed.
+      // with no trailing spacer needed. This logic is breakpoint-agnostic,
+      // so it keeps working unchanged across mobile / tablet / desktop.
       const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
       const updateHeight = () => {
         const maxScroll = getMaxScroll();
         section.style.height = `${window.innerHeight + maxScroll}px`;
-        // console.log({
-        //   trackWidth: track.scrollWidth,
-        //   containerWidth: container.clientWidth,
-        //   maxScroll,
-        //   sectionHeight: section.offsetHeight,
-        //   viewportHeight: window.innerHeight,
-        // });
       };
 
       const updateLayout = () => {
@@ -99,13 +93,13 @@ export default function FeatureProject() {
       className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
-      <div className="px-6 lg:px-10 mt-18 lg:mt-10 mb-8 lg:mb-16">
-        <h2 className="font-[Founders] text-center text-[#6F00FF] text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
+      <div className="px-5 sm:px-8 lg:px-10 mt-20 sm:mt-16 lg:mt-10 mb-6 sm:mb-10 lg:mb-16">
+        <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
           <span>.</span>
         </h2>
 
-        <p className="font-nexa font-light text-sm sm:text-base lg:text-xl text-[#111111] max-w-[320px] sm:max-w-[650px] lg:max-w-[1100px] mx-auto mt-5 lg:mt-6 leading-7 sm:leading-8 text-center px-4">
+        <p className="font-nexa font-light text-sm sm:text-base lg:text-xl text-[#111111] max-w-[300px] sm:max-w-[600px] lg:max-w-[1100px] mx-auto mt-3 sm:mt-5 lg:mt-6 leading-6 sm:leading-7 lg:leading-8 text-center px-4">
           A curated collection of branding, digital experiences, and visual
           systems designed for modern brands across fashion, beauty, lifestyle,
           hospitality, and emerging businesses.
@@ -115,19 +109,23 @@ export default function FeatureProject() {
       {/* Cards */}
       <div
         ref={containerRef}
-        className="flex-1 flex items-center overflow-hidden"
+        className="flex-1 min-h-0 flex items-center overflow-hidden"
       >
         <div
           ref={trackRef}
-          className="flex gap-6 lg:gap-8 pl-6 lg:pl-10 will-change-transform"
+          className="flex items-center
+          gap-4 sm:gap-8 lg:gap-8
+          pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0
+          will-change-transform"
         >
           {projects.map((project, index) => (
             <div
               key={index}
               className="group relative shrink-0
-              w-[280px] sm:w-[420px] lg:w-[480px]
-              h-[320px] sm:h-[340px]
-              rounded-[32px]
+              w-[90vw] max-w-[420px] aspect-[4/3]
+              sm:w-[78vw] sm:max-w-[680px] sm:aspect-[16/10]
+              lg:w-[480px] lg:h-[340px] lg:aspect-auto lg:max-w-none
+              rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
               overflow-hidden
               shadow-[0_20px_55px_rgba(111,0,255,0.10)]
               cursor-pointer
@@ -142,15 +140,17 @@ export default function FeatureProject() {
 
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="font-[Founders] text-white text-3xl lg:text-4xl mb-2">
+              <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
+                <h3 className="font-[Founders] text-white text-xl sm:text-2xl lg:text-4xl mb-1.5 sm:mb-2 leading-tight">
                   {project.title}
                 </h3>
 
-                <p className="font-nexaw text-[#C7FF3F]">{project.category}</p>
+                <p className="font-nexaw text-[#C7FF3F] text-sm sm:text-base leading-snug">
+                  {project.category}
+                </p>
               </div>
 
-              <div className="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-sm">
+              <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-xs sm:text-sm">
                 {String(index + 1).padStart(2, "0")}
               </div>
             </div>
@@ -159,13 +159,13 @@ export default function FeatureProject() {
       </div>
 
       {/* Progress */}
-      <div className="px-6 lg:px-10 mt-4">
+      <div className="px-5 sm:px-8 lg:px-10 mt-4 sm:mt-6 lg:mt-4">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-5 mb-6">
+        <div className="flex justify-center mt-5 mb-5 sm:mt-5 sm:mb-6">
           <button
             onClick={() => navigate("/portfolio")}
             className="bg-[#7B68EE]
@@ -173,8 +173,12 @@ export default function FeatureProject() {
             text-white
             font-[Nexa]
             font-bold
-            px-10
-            py-4
+            px-8 sm:px-10
+            py-3.5 sm:py-4
+            min-h-[44px]
+            inline-flex
+            items-center
+            justify-center
             rounded-full
             shadow-[0_4px_14px_rgba(111,0,255,0.25)]
             hover:shadow-[0_6px_18px_rgba(111,0,255,0.35)]
