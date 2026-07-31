@@ -36,7 +36,7 @@ export default function FeatureProject() {
           start: "top top",
           end: () => `+=${getMaxScroll()}`,
           pin: true,
-          scrub: true,
+          scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
@@ -80,7 +80,7 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] min-h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
       <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
@@ -99,11 +99,11 @@ export default function FeatureProject() {
       {/* Cards */}
       <div
         ref={containerRef}
-        className="flex-1 min-h-0 flex items-center overflow-hidden"
+        className="h-[320px] sm:h-[420px] lg:h-[340px] overflow-hidden flex items-center"
       >
         <div
           ref={trackRef}
-          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 p-5 will-change-transform"
+          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 py-0 will-change-transform"
         >
           {projects.map((project, index) => (
             <div
@@ -122,7 +122,7 @@ export default function FeatureProject() {
               <img
                 src={project.image}
                 alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
+                className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110 will-change-transform"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
