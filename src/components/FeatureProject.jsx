@@ -7,9 +7,9 @@ import projects from "../data/projects";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FeatureProject() {
-  const sectionRef = useRef(null); // pinned element + trigger
-  const containerRef = useRef(null); // clipping viewport (overflow-hidden)
-  const trackRef = useRef(null); // horizontally translated track
+  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
+  const trackRef = useRef(null);
   const progressRef = useRef(null);
   const navigate = useNavigate();
 
@@ -21,28 +21,25 @@ export default function FeatureProject() {
 
       if (!section || !container || !track) return;
 
-      // Horizontal distance = full track width minus visible viewport width
-      const getScrollDistance = () =>
+      const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
-      let st; // ScrollTrigger instance, assigned below
+      const refreshLayout = () => {
+        ScrollTrigger.refresh();
+      };
 
       const scrollTween = gsap.to(track, {
-        x: () => -getScrollDistance(),
+        x: () => -getMaxScroll(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => "+=" + getScrollDistance(),
+          end: () => `+=${getMaxScroll()}`,
           pin: true,
-          pinType: "transform",
-          pinSpacing: true,
-          scrub: 1,
+          scrub: true,
           anticipatePin: 1,
-          invalidateOnRefresh: true, // recompute x on every refresh (resize/orientation)
-          refreshPriority: 1, // refresh this before triggers lower on the page
+          invalidateOnRefresh: true,
           fastScrollEnd: true,
-          // markers: true, // <-- uncomment locally only, never ship to production
           onUpdate: (self) => {
             if (progressRef.current) {
               progressRef.current.style.width = `${self.progress * 100}%`;
@@ -51,40 +48,27 @@ export default function FeatureProject() {
         },
       });
 
-      st = scrollTween.scrollTrigger;
-
-      // Debounced refresh so rapid resize events don't thrash layout
-      let resizeRAF;
-      const refreshLayout = () => {
-        cancelAnimationFrame(resizeRAF);
-        resizeRAF = requestAnimationFrame(() => ScrollTrigger.refresh());
-      };
-
       window.addEventListener("resize", refreshLayout);
 
-      // Images can change track.scrollWidth once they load — refresh when they do
       const images = Array.from(track.querySelectorAll("img"));
       const pendingImages = images.filter((img) => !img.complete);
+
       pendingImages.forEach((img) =>
         img.addEventListener("load", refreshLayout, { once: true }),
       );
 
-      // Fonts can shift card/text width too
       if (document.fonts?.ready) {
         document.fonts.ready.then(refreshLayout).catch(() => {});
       }
 
-      // Initial settle pass (after paint) to make sure widths are final
       refreshLayout();
 
       return () => {
-        cancelAnimationFrame(resizeRAF);
         window.removeEventListener("resize", refreshLayout);
         pendingImages.forEach((img) =>
           img.removeEventListener("load", refreshLayout),
         );
-        // Only kill what THIS component created — never touch unrelated triggers
-        st?.kill();
+        scrollTween.scrollTrigger?.kill();
         scrollTween.kill();
       };
     }, sectionRef);
@@ -93,9 +77,13 @@ export default function FeatureProject() {
   }, []);
 
   return (
-    <section className="relative bg-[#ECE7FF] py-16 sm:py-20 lg:py-24 overflow-hidden flex flex-col">
+    <section
+      ref={sectionRef}
+      id="featured"
+      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
+    >
       {/* Heading */}
-      <div className="px-5 sm:px-8 lg:px-10 mb-8 sm:mb-12 lg:mb-14">
+      <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
           <span>.</span>
@@ -108,64 +96,57 @@ export default function FeatureProject() {
         </p>
       </div>
 
-      {/*
-        Pinned element (sectionRef): height comes from its own content
-        (the cards), not from a hardcoded px value or the viewport. This is
-        what keeps it correct across desktop/laptop/tablet/mobile and on
-        short-height screens — there's nothing to recalculate per breakpoint.
-      */}
-      <div ref={sectionRef} className="w-full">
+      {/* Cards */}
+      <div
+        ref={containerRef}
+        className="flex-1 min-h-0 flex items-center overflow-hidden"
+      >
         <div
-          ref={containerRef}
-          className="relative w-full overflow-hidden flex items-center"
+          ref={trackRef}
+          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 p-5 will-change-transform"
         >
-          <div
-            ref={trackRef}
-            className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-10 py-6 will-change-transform"
-          >
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="group relative shrink-0
-                w-[88vw] max-w-[420px] aspect-[4/3]
-                sm:w-[78vw] sm:max-w-[680px] sm:aspect-[16/10]
-                lg:w-[480px] lg:h-[340px] lg:aspect-auto lg:max-w-none
-                rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
-                overflow-hidden
-                shadow-[0_20px_55px_rgba(111,0,255,0.10)]
-                cursor-pointer
-                transition-transform duration-300
-                hover:-translate-y-2.5"
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
-                />
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="group relative shrink-0
+              w-[88vw] max-w-[420px] aspect-[4/3]
+              sm:w-[78vw] sm:max-w-[680px] sm:aspect-[16/10]
+              lg:w-[480px] lg:h-[340px] lg:aspect-auto lg:max-w-none
+              rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
+              overflow-hidden
+              shadow-[0_20px_55px_rgba(111,0,255,0.10)]
+              cursor-pointer
+              transition-transform duration-300
+              hover:-translate-y-2.5"
+            >
+              <img
+                src={project.image}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
+              />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              {/* <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" /> */}
 
-                <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
-                  <h3 className="font-[Founders] text-white text-xl sm:text-2xl lg:text-4xl mb-1.5 sm:mb-2 leading-tight">
-                    {project.title}
-                  </h3>
+              <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
+                <h3 className="font-[Founders] text-white text-xl sm:text-2xl lg:text-4xl mb-1.5 sm:mb-2 leading-tight">
+                  {project.title}
+                </h3>
 
-                  <p className="font-nexaw text-[#C7FF3F] text-sm sm:text-base leading-snug">
-                    {project.category}
-                  </p>
-                </div>
-
-                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-xs sm:text-sm">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
+                <p className="font-nexaw text-[#C7FF3F] text-sm sm:text-base leading-snug">
+                  {project.category}
+                </p>
               </div>
-            ))}
-          </div>
+
+              <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 backdrop-blur-xl flex items-center justify-center text-white/70 text-xs sm:text-sm">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Progress */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-6 sm:mt-8 lg:mt-10">
+      <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-5 lg:mt-4 pb-3 sm:pb-5">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
@@ -196,6 +177,7 @@ export default function FeatureProject() {
           </button>
         </div>
       </div>
+      {/*  */}
     </section>
   );
 }
