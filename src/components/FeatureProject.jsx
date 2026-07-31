@@ -14,13 +14,15 @@ export default function FeatureProject() {
   const progressRef = useRef(null);
   const navigate = useNavigate();
 
+  // Native-scroll mode now covers mobile AND tablet (<1024px).
+  // Only true desktop (>=1024px) gets the GSAP pinned horizontal scroll.
   const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+    typeof window !== "undefined" ? window.innerWidth < 1024 : false,
   );
 
   // Track breakpoint changes so JSX can switch between GSAP mode and native scroll mode
   useEffect(() => {
-    const mql = window.matchMedia("(max-width: 767px)");
+    const mql = window.matchMedia("(max-width: 1023px)");
     const handleChange = (e) => setIsMobile(e.matches);
 
     setIsMobile(mql.matches);
@@ -35,14 +37,11 @@ export default function FeatureProject() {
     };
   }, []);
 
-  // GSAP pinned horizontal scroll — tablet & desktop only (>=768px)
-  // Untouched from the original implementation, just scoped via matchMedia
-  // so it never initializes (and therefore never needs cleanup fighting)
-  // on mobile.
+  // GSAP pinned horizontal scroll — desktop only (>=1024px)
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       const section = sectionRef.current;
       const container = containerRef.current;
       const track = trackRef.current;
@@ -94,7 +93,7 @@ export default function FeatureProject() {
       refreshLayout();
 
       // This return runs when the matchMedia condition stops matching
-      // (e.g. resize below 768px) OR on unmount — gsap.matchMedia handles both.
+      // (e.g. resize below 1024px) OR on unmount — gsap.matchMedia handles both.
       return () => {
         window.removeEventListener("resize", refreshLayout);
         pendingImages.forEach((img) =>
@@ -108,7 +107,7 @@ export default function FeatureProject() {
     return () => mm.revert();
   }, []);
 
-  // Native horizontal scroll progress — mobile only
+  // Native horizontal scroll progress — mobile & tablet
   useEffect(() => {
     if (!isMobile) return;
 
@@ -149,6 +148,34 @@ export default function FeatureProject() {
         }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
+        }
+
+        /*
+          Fix: on Android/touch devices, :hover gets "stuck" after a tap
+          because there's no real pointing device to move away and clear it.
+          (hover: none) targets devices that can't truly hover (touchscreens),
+          so we neutralize the hover/group-hover effects there and rely on
+          :active for a quick tap-feedback instead.
+        */
+        @media (hover: none) {
+          .group:hover img {
+            transform: none !important;
+          }
+          .group:active img {
+            transform: scale(1.03);
+          }
+          .group:hover {
+            transform: none !important;
+          }
+
+          button:hover {
+            background-color: #7b68ee !important;
+            box-shadow: 0 4px 14px rgba(111, 0, 255, 0.25) !important;
+            transform: none !important;
+          }
+          button:active {
+            background-color: #6f00ff !important;
+          }
         }
       `}</style>
 
@@ -231,7 +258,7 @@ export default function FeatureProject() {
             </div>
           ))}
 
-          {/* Sentinel: only needed for GSAP's scroll-distance math (tablet/desktop) */}
+          {/* Sentinel: only needed for GSAP's scroll-distance math (desktop) */}
           {!isMobile && (
             <div
               ref={endMarkerRef}
