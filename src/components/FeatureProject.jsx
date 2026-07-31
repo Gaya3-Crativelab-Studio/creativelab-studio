@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function FeatureProject() {
   const sectionRef = useRef(null);
-  const containerRef = useRef(null); // the clipped viewport the cards scroll inside
-  const trackRef = useRef(null); // the flex row of cards being translated
+  const containerRef = useRef(null);
+  const trackRef = useRef(null);
   const progressRef = useRef(null);
   const navigate = useNavigate();
 
@@ -18,27 +18,12 @@ export default function FeatureProject() {
       const section = sectionRef.current;
       const container = containerRef.current;
       const track = trackRef.current;
+
       if (!section || !container || !track) return;
 
-      // Distance = how much wider the track is than the container that
-      // actually clips it — NOT the browser window. This is what makes the
-      // last card's right edge land exactly on the container's right edge,
-      // with no trailing spacer needed. This logic is breakpoint-agnostic,
-      // so it keeps working unchanged across mobile / tablet / desktop.
       const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
-      // NOTE: section.style.height is intentionally NOT set here.
-      // When `pin: true` is active, ScrollTrigger already reserves
-      // (end - start) of extra scroll room on top of the pinned element's
-      // own height (h-screen / 100vh from CSS). Manually inflating the
-      // section's height by maxScroll AND passing maxScroll as `end`
-      // reserved that same scroll distance twice — leaving a dead pinned
-      // zone (the "large black area") the length of maxScroll after the
-      // horizontal tween finished, most visible on mobile/tablet where
-      // maxScroll is large. Letting `end` be the only source of the extra
-      // scroll distance means the pin releases the instant the horizontal
-      // scroll completes, with no manual height math and no magic numbers.
       const updateLayout = () => {
         ScrollTrigger.refresh();
       };
@@ -66,12 +51,11 @@ export default function FeatureProject() {
 
       const images = Array.from(track.querySelectorAll("img"));
       const pendingImages = images.filter((img) => !img.complete);
+
       pendingImages.forEach((img) =>
         img.addEventListener("load", updateLayout, { once: true }),
       );
 
-      // Web fonts swapping in can change text width/wrapping inside the
-      // cards, which changes track.scrollWidth — refresh once they land.
       if (document.fonts?.ready) {
         document.fonts.ready.then(updateLayout).catch(() => {});
       }
@@ -95,10 +79,10 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] min-h-screen lg:h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-20 sm:mt-16 lg:mt-10 mb-6 sm:mb-10 lg:mb-16">
+      <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-4 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
           <span>.</span>
@@ -118,16 +102,13 @@ export default function FeatureProject() {
       >
         <div
           ref={trackRef}
-          className="flex items-center
-          gap-4 sm:gap-8 lg:gap-8
-          pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 p-5
-          will-change-transform"
+          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 p-5 will-change-transform"
         >
           {projects.map((project, index) => (
             <div
               key={index}
               className="group relative shrink-0
-              w-[90vw] max-w-[420px] aspect-[4/3]
+              w-[88vw] max-w-[420px] aspect-[4/3]
               sm:w-[78vw] sm:max-w-[680px] sm:aspect-[16/10]
               lg:w-[480px] lg:h-[340px] lg:aspect-auto lg:max-w-none
               rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
@@ -164,13 +145,13 @@ export default function FeatureProject() {
       </div>
 
       {/* Progress */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-4 sm:mt-6 lg:mt-4">
+      <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-6 lg:mt-4 pb-4 sm:pb-6">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-5 mb-5 sm:mt-5 sm:mb-6">
+        <div className="flex justify-center mt-4 sm:mt-5">
           <button
             onClick={() => navigate("/portfolio")}
             className="bg-[#7B68EE]
