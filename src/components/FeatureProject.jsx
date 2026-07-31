@@ -1,28 +1,47 @@
 import { useRef, useLayoutEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import gsap from "gsap";
+
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import projects from "../data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FeatureProject() {
   const sectionRef = useRef(null);
+
   const containerRef = useRef(null);
+
   const trackRef = useRef(null);
+
   const progressRef = useRef(null);
+
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const section = sectionRef.current;
+
       const container = containerRef.current;
+
       const track = trackRef.current;
 
       if (!section || !container || !track) return;
 
-      const getMaxScroll = () =>
-        Math.max(track.scrollWidth - container.clientWidth, 0);
+      const getMaxScroll = () => {
+        const lastCard = track.lastElementChild;
+
+        if (!lastCard) return 0;
+
+        return Math.max(
+          lastCard.offsetLeft + lastCard.offsetWidth - container.clientWidth,
+
+          0,
+        );
+      };
 
       const refreshLayout = () => {
         ScrollTrigger.refresh();
@@ -30,16 +49,26 @@ export default function FeatureProject() {
 
       const scrollTween = gsap.to(track, {
         x: () => -getMaxScroll(),
+
         ease: "none",
+
         scrollTrigger: {
           trigger: section,
+
           start: "top top",
+
           end: () => `+=${getMaxScroll()}`,
+
           pin: true,
+
           scrub: 1,
+
           anticipatePin: 1,
+
           invalidateOnRefresh: true,
+
           fastScrollEnd: true,
+
           onUpdate: (self) => {
             if (progressRef.current) {
               progressRef.current.style.width = `${self.progress * 100}%`;
@@ -51,6 +80,7 @@ export default function FeatureProject() {
       window.addEventListener("resize", refreshLayout);
 
       const images = Array.from(track.querySelectorAll("img"));
+
       const pendingImages = images.filter((img) => !img.complete);
 
       pendingImages.forEach((img) =>
@@ -65,10 +95,13 @@ export default function FeatureProject() {
 
       return () => {
         window.removeEventListener("resize", refreshLayout);
+
         pendingImages.forEach((img) =>
           img.removeEventListener("load", refreshLayout),
         );
+
         scrollTween.scrollTrigger?.kill();
+
         scrollTween.kill();
       };
     }, sectionRef);
@@ -83,6 +116,7 @@ export default function FeatureProject() {
       className="relative bg-[#ECE7FF] min-h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
+
       <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
@@ -97,13 +131,14 @@ export default function FeatureProject() {
       </div>
 
       {/* Cards */}
+
       <div
         ref={containerRef}
         className="h-[320px] sm:h-[420px] lg:h-[340px] overflow-hidden flex items-center"
       >
         <div
           ref={trackRef}
-          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 py-0 will-change-transform"
+          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] sm:pl-[11vw] lg:pl-10 py-0 will-change-transform"
         >
           {projects.map((project, index) => (
             <div
@@ -137,12 +172,14 @@ export default function FeatureProject() {
       </div>
 
       {/* Progress */}
+
       <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-5 lg:mt-4 pb-3 sm:pb-5">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
 
         {/* Button */}
+
         <div className="flex justify-center mt-4 sm:mt-5">
           <button
             onClick={() => navigate("/portfolio")}
@@ -152,7 +189,7 @@ export default function FeatureProject() {
           </button>
         </div>
       </div>
-      {/*  */}
+
       {/*  */}
     </section>
   );
