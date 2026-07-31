@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,8 +14,35 @@ export default function FeatureProject() {
   const progressRef = useRef(null);
   const navigate = useNavigate();
 
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+  );
+
+  // Track breakpoint changes so JSX can switch between GSAP mode and native scroll mode
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    const handleChange = (e) => setIsMobile(e.matches);
+
+    setIsMobile(mql.matches);
+
+    if (mql.addEventListener) mql.addEventListener("change", handleChange);
+    else mql.addListener(handleChange); // Safari <14 fallback
+
+    return () => {
+      if (mql.removeEventListener)
+        mql.removeEventListener("change", handleChange);
+      else mql.removeListener(handleChange);
+    };
+  }, []);
+
+  // GSAP pinned horizontal scroll — tablet & desktop only (>=768px)
+  // Untouched from the original implementation, just scoped via matchMedia
+  // so it never initializes (and therefore never needs cleanup fighting)
+  // on mobile.
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
       const section = sectionRef.current;
       const container = containerRef.current;
       const track = trackRef.current;
@@ -66,6 +93,8 @@ export default function FeatureProject() {
 
       refreshLayout();
 
+      // This return runs when the matchMedia condition stops matching
+      // (e.g. resize below 768px) OR on unmount — gsap.matchMedia handles both.
       return () => {
         window.removeEventListener("resize", refreshLayout);
         pendingImages.forEach((img) =>
@@ -74,17 +103,55 @@ export default function FeatureProject() {
         scrollTween.scrollTrigger?.kill();
         scrollTween.kill();
       };
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
+
+  // Native horizontal scroll progress — mobile only
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updateProgress = () => {
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      const progress = maxScroll > 0 ? container.scrollLeft / maxScroll : 0;
+      if (progressRef.current) {
+        progressRef.current.style.width = `${progress * 100}%`;
+      }
+    };
+
+    updateProgress();
+    container.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+
+    return () => {
+      container.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, [isMobile]);
 
   return (
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
+      className={`relative bg-[#ECE7FF] flex flex-col ${
+        isMobile ? "" : "h-screen overflow-hidden"
+      }`}
     >
+      {/* Hide scrollbar cross-browser while keeping native touch scroll */}
+      <style>{`
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+
       {/* Heading */}
       <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
@@ -102,11 +169,28 @@ export default function FeatureProject() {
       {/* Cards */}
       <div
         ref={containerRef}
-        className="flex-1 min-h-0 flex items-center overflow-hidden"
+        className={
+          isMobile
+            ? "no-scrollbar overflow-x-auto overflow-y-hidden"
+            : "flex-1 min-h-0 flex items-center overflow-hidden"
+        }
+        style={
+          isMobile
+            ? {
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+                WebkitOverflowScrolling: "touch",
+              }
+            : undefined
+        }
       >
         <div
           ref={trackRef}
-          className="flex items-center gap-4 sm:gap-8 lg:gap-8 pl-[5vw] sm:pl-[11vw] lg:pl-10 will-change-transform"
+          className={`flex items-center gap-4 sm:gap-8 lg:gap-8 will-change-transform ${
+            isMobile
+              ? "px-[5vw] sm:px-[11vw]"
+              : "pl-[5vw] sm:pl-[11vw] lg:pl-10"
+          }`}
         >
           {projects.map((project, index) => (
             <div
@@ -121,6 +205,7 @@ export default function FeatureProject() {
               cursor-pointer
               transition-transform duration-300
               hover:-translate-y-2.5"
+              style={isMobile ? { scrollSnapAlign: "center" } : undefined}
             >
               <img
                 src={project.image}
@@ -146,12 +231,14 @@ export default function FeatureProject() {
             </div>
           ))}
 
-          {/* Sentinel: single source of truth for scroll distance */}
-          <div
-            ref={endMarkerRef}
-            className="shrink-0 w-px h-px"
-            aria-hidden="true"
-          />
+          {/* Sentinel: only needed for GSAP's scroll-distance math (tablet/desktop) */}
+          {!isMobile && (
+            <div
+              ref={endMarkerRef}
+              className="shrink-0 w-px h-px"
+              aria-hidden="true"
+            />
+          )}
         </div>
       </div>
 
@@ -187,7 +274,6 @@ export default function FeatureProject() {
           </button>
         </div>
       </div>
-      {/*  */}
     </section>
   );
 }
