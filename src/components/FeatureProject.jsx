@@ -24,7 +24,7 @@ export default function FeatureProject() {
       const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
-      const updateLayout = () => {
+      const refreshLayout = () => {
         ScrollTrigger.refresh();
       };
 
@@ -39,6 +39,7 @@ export default function FeatureProject() {
           scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          fastScrollEnd: true,
           onUpdate: (self) => {
             if (progressRef.current) {
               progressRef.current.style.width = `${self.progress * 100}%`;
@@ -47,25 +48,25 @@ export default function FeatureProject() {
         },
       });
 
-      window.addEventListener("resize", updateLayout);
+      window.addEventListener("resize", refreshLayout);
 
       const images = Array.from(track.querySelectorAll("img"));
       const pendingImages = images.filter((img) => !img.complete);
 
       pendingImages.forEach((img) =>
-        img.addEventListener("load", updateLayout, { once: true }),
+        img.addEventListener("load", refreshLayout, { once: true }),
       );
 
       if (document.fonts?.ready) {
-        document.fonts.ready.then(updateLayout).catch(() => {});
+        document.fonts.ready.then(refreshLayout).catch(() => {});
       }
 
-      updateLayout();
+      refreshLayout();
 
       return () => {
-        window.removeEventListener("resize", updateLayout);
+        window.removeEventListener("resize", refreshLayout);
         pendingImages.forEach((img) =>
-          img.removeEventListener("load", updateLayout),
+          img.removeEventListener("load", refreshLayout),
         );
         scrollTween.scrollTrigger?.kill();
         scrollTween.kill();
@@ -79,10 +80,10 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] min-h-screen lg:h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-4 sm:mb-10 lg:mb-16">
+      <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
           <span>.</span>
@@ -145,7 +146,7 @@ export default function FeatureProject() {
       </div>
 
       {/* Progress */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-6 lg:mt-4 pb-4 sm:pb-6">
+      <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-5 lg:mt-4 pb-3 sm:pb-5">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
