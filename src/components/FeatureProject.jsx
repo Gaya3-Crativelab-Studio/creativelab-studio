@@ -36,6 +36,7 @@ export default function FeatureProject() {
           start: "top top",
           end: () => `+=${getMaxScroll()}`,
           pin: true,
+          pinType: "transform",
           scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
@@ -125,7 +126,7 @@ export default function FeatureProject() {
                 className="absolute inset-0 w-full h-full object-cover duration-700 group-hover:scale-110"
               />
 
-              {/* <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" /> */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
               <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
                 <h3 className="font-[Founders] text-white text-xl sm:text-2xl lg:text-4xl mb-1.5 sm:mb-2 leading-tight">
