@@ -28,13 +28,18 @@ export default function FeatureProject() {
       const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
-      const updateHeight = () => {
-        const maxScroll = getMaxScroll();
-        section.style.height = `${window.innerHeight + maxScroll}px`;
-      };
-
+      // NOTE: section.style.height is intentionally NOT set here.
+      // When `pin: true` is active, ScrollTrigger already reserves
+      // (end - start) of extra scroll room on top of the pinned element's
+      // own height (h-screen / 100vh from CSS). Manually inflating the
+      // section's height by maxScroll AND passing maxScroll as `end`
+      // reserved that same scroll distance twice — leaving a dead pinned
+      // zone (the "large black area") the length of maxScroll after the
+      // horizontal tween finished, most visible on mobile/tablet where
+      // maxScroll is large. Letting `end` be the only source of the extra
+      // scroll distance means the pin releases the instant the horizontal
+      // scroll completes, with no manual height math and no magic numbers.
       const updateLayout = () => {
-        updateHeight();
         ScrollTrigger.refresh();
       };
 
@@ -115,7 +120,7 @@ export default function FeatureProject() {
           ref={trackRef}
           className="flex items-center
           gap-4 sm:gap-8 lg:gap-8
-          pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0
+          pl-[5vw] pr-[5vw] sm:pl-[11vw] sm:pr-[11vw] lg:pl-10 lg:pr-0 p-5
           will-change-transform"
         >
           {projects.map((project, index) => (
