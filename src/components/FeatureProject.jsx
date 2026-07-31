@@ -36,7 +36,6 @@ export default function FeatureProject() {
           start: "top top",
           end: () => `+=${getMaxScroll()}`,
           pin: true,
-          pinType: "transform",
           scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
