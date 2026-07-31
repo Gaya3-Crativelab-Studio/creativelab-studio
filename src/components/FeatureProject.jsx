@@ -80,7 +80,7 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] h-screen p-1 overflow-hidden flex flex-col"
     >
       {/* Heading */}
       <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
