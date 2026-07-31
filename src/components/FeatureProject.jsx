@@ -25,7 +25,9 @@ export default function FeatureProject() {
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
       const refreshLayout = () => {
-        ScrollTrigger.refresh();
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh(true);
+        });
       };
 
       const scrollTween = gsap.to(track, {
@@ -80,10 +82,10 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] min-h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
     >
       {/* Heading */}
-      <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
+      <div className="px-5 sm:px-8 lg:px-10 mt-6 sm:mt-16 lg:mt-10 mb-2 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
           <span>.</span>
@@ -99,7 +101,7 @@ export default function FeatureProject() {
       {/* Cards */}
       <div
         ref={containerRef}
-        className="h-[320px] sm:h-[420px] lg:h-[340px] overflow-hidden flex items-center"
+        className="flex-1 min-h-0 flex items-center justify-center overflow-hidden py-2"
       >
         <div
           ref={trackRef}
@@ -108,16 +110,7 @@ export default function FeatureProject() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group relative shrink-0
-              w-[88vw] max-w-[420px] aspect-[4/3]
-              sm:w-[78vw] sm:max-w-[680px] sm:aspect-[16/10]
-              lg:w-[480px] lg:h-[340px] lg:aspect-auto lg:max-w-none
-              rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
-              overflow-hidden
-              shadow-[0_20px_55px_rgba(111,0,255,0.10)]
-              cursor-pointer
-              transition-transform duration-300
-              hover:-translate-y-2.5"
+              className="group relative shrink-0 w-[88vw] h-[44vh] min-h-[200px] max-h-[280px] max-w-[420px] sm:w-[78vw] sm:h-[50vh] sm:min-h-[240px] sm:max-h-[340px] sm:max-w-[680px] lg:w-[480px] lg:h-[340px] lg:max-w-none rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] overflow-hidden shadow-[0_20px_55px_rgba(111,0,255,0.10)] cursor-pointer transition-transform duration-300 hover:-translate-y-2.5"
             >
               <img
                 src={project.image}
@@ -155,23 +148,7 @@ export default function FeatureProject() {
         <div className="flex justify-center mt-4 sm:mt-5">
           <button
             onClick={() => navigate("/portfolio")}
-            className="bg-[#7B68EE]
-            hover:bg-[#6F00FF]
-            text-white
-            font-[Nexa]
-            font-bold
-            px-8 sm:px-10
-            py-3.5 sm:py-4
-            min-h-[44px]
-            inline-flex
-            items-center
-            justify-center
-            rounded-full
-            shadow-[0_4px_14px_rgba(111,0,255,0.25)]
-            hover:shadow-[0_6px_18px_rgba(111,0,255,0.35)]
-            duration-300
-            hover:scale-105
-            cursor-pointer"
+            className="bg-[#7B68EE] hover:bg-[#6F00FF] text-white font-[Nexa] font-bold px-8 sm:px-10 py-3.5 sm:py-4 min-h-[44px] inline-flex items-center justify-center rounded-full shadow-[0_4px_14px_rgba(111,0,255,0.25)] hover:shadow-[0_6px_18px_rgba(111,0,255,0.35)] duration-300 hover:scale-105 cursor-pointer"
           >
             View All
           </button>
