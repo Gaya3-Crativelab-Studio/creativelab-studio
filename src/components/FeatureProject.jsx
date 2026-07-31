@@ -21,8 +21,6 @@ export default function FeatureProject() {
 
       if (!section || !container || !track) return;
 
-      const mm = gsap.matchMedia();
-
       const getMaxScroll = () =>
         Math.max(track.scrollWidth - container.clientWidth, 0);
 
@@ -30,86 +28,49 @@ export default function FeatureProject() {
         ScrollTrigger.refresh();
       };
 
-      mm.add("(min-width: 1024px)", () => {
-        const scrollTween = gsap.to(track, {
-          x: () => -getMaxScroll(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${getMaxScroll()}`,
-            pin: true,
-            scrub: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            fastScrollEnd: true,
-            onUpdate: (self) => {
-              if (progressRef.current) {
-                progressRef.current.style.width = `${self.progress * 100}%`;
-              }
-            },
+      const scrollTween = gsap.to(track, {
+        x: () => -getMaxScroll(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${getMaxScroll()}`,
+          pin: true,
+          scrub: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
+          onUpdate: (self) => {
+            if (progressRef.current) {
+              progressRef.current.style.width = `${self.progress * 100}%`;
+            }
           },
-        });
+        },
+      });
 
-        window.addEventListener("resize", refreshLayout);
+      window.addEventListener("resize", refreshLayout);
 
-        const images = Array.from(track.querySelectorAll("img"));
-        const pendingImages = images.filter((img) => !img.complete);
+      const images = Array.from(track.querySelectorAll("img"));
+      const pendingImages = images.filter((img) => !img.complete);
 
+      pendingImages.forEach((img) =>
+        img.addEventListener("load", refreshLayout, { once: true }),
+      );
+
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(refreshLayout).catch(() => {});
+      }
+
+      refreshLayout();
+
+      return () => {
+        window.removeEventListener("resize", refreshLayout);
         pendingImages.forEach((img) =>
-          img.addEventListener("load", refreshLayout, { once: true }),
+          img.removeEventListener("load", refreshLayout),
         );
-
-        if (document.fonts?.ready) {
-          document.fonts.ready.then(refreshLayout).catch(() => {});
-        }
-
-        refreshLayout();
-
-        return () => {
-          window.removeEventListener("resize", refreshLayout);
-          pendingImages.forEach((img) =>
-            img.removeEventListener("load", refreshLayout),
-          );
-          scrollTween.scrollTrigger?.kill();
-          scrollTween.kill();
-        };
-      });
-
-      mm.add("(max-width: 1023px)", () => {
-        if (progressRef.current) {
-          progressRef.current.style.width = "0%";
-        }
-
-        const updateProgress = () => {
-          const sectionTop = section.getBoundingClientRect().top;
-          const sectionHeight = section.offsetHeight;
-          const viewportHeight = window.innerHeight;
-          const total = sectionHeight + viewportHeight;
-          const current = Math.min(
-            Math.max(-sectionTop, 0),
-            total - viewportHeight,
-          );
-          const progress =
-            total > viewportHeight ? current / (total - viewportHeight) : 0;
-
-          if (progressRef.current) {
-            progressRef.current.style.width = `${progress * 100}%`;
-          }
-        };
-
-        window.addEventListener("scroll", updateProgress, { passive: true });
-        window.addEventListener("resize", updateProgress);
-
-        updateProgress();
-
-        return () => {
-          window.removeEventListener("scroll", updateProgress);
-          window.removeEventListener("resize", updateProgress);
-        };
-      });
-
-      return () => mm.revert();
+        scrollTween.scrollTrigger?.kill();
+        scrollTween.kill();
+      };
     }, sectionRef);
 
     return () => ctx.revert();
@@ -119,8 +80,9 @@ export default function FeatureProject() {
     <section
       ref={sectionRef}
       id="featured"
-      className="relative bg-[#ECE7FF] min-h-screen overflow-hidden flex flex-col"
+      className="relative bg-[#ECE7FF] h-screen overflow-hidden flex flex-col"
     >
+      {/* Heading */}
       <div className="px-5 sm:px-8 lg:px-10 mt-10 sm:mt-16 lg:mt-10 mb-3 sm:mb-10 lg:mb-16">
         <h2 className="font-[Founders] text-center text-[#6F00FF] text-3xl sm:text-5xl lg:text-7xl leading-[1.15] sm:leading-[1.05] lg:leading-[0.95]">
           Selected projects & visual stories
@@ -134,6 +96,7 @@ export default function FeatureProject() {
         </p>
       </div>
 
+      {/* Cards */}
       <div
         ref={containerRef}
         className="flex-1 min-h-0 flex items-center overflow-hidden"
@@ -182,11 +145,13 @@ export default function FeatureProject() {
         </div>
       </div>
 
+      {/* Progress */}
       <div className="px-5 sm:px-8 lg:px-10 mt-3 sm:mt-5 lg:mt-4 pb-3 sm:pb-5">
         <div className="h-0.5 bg-black/10 rounded-full overflow-hidden">
           <div ref={progressRef} className="h-full w-0 bg-[#6F00FF]" />
         </div>
 
+        {/* Button */}
         <div className="flex justify-center mt-4 sm:mt-5">
           <button
             onClick={() => navigate("/portfolio")}
