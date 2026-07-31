@@ -28,7 +28,7 @@
 html {
   height: 100%;
   overflow-x: hidden;
-  background-color: #0a0a0a;
+  background-color: #ffffff;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -39,8 +39,8 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #ffffff;
+  color: #111111;
   font-family: "Nexa", sans-serif;
   font-weight: 300;
 }
@@ -51,6 +51,7 @@ body {
   min-height: 100%;
   min-height: 100svh;
   min-height: 100dvh;
+  background: #ffffff;
 }
 
 @supports (height: 100dvh) {
